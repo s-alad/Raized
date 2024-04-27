@@ -15,17 +15,57 @@
         font-family: Georgia, 'Times New Roman', Times, serif;
     }
 
+    .search {
+        width: 30%;
+        /* padding: 8px; */
+        background-color: transparent;
+        border: 2px solid white;
+        border-radius: 6px;
+        display: flex;
+        .magnify {
+            width: 34px;
+            @include c.center();
+            color: white;
+        }
+        input {
+            padding: 8px;
+            flex: 1;
+            border: transparent;
+            background-color: transparent;
+        }
+    }
+
     span {
         display: flex;
         gap: 20px;
-    }
+        align-items: center;
 
-    .cta {
-        padding: 8px;
-        border-radius: 4px;
-        border: 1px solid white;
-        background-color: transparent;
-        color: white;
-        cursor: pointer;
+        .cta {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid white;
+            background-color: transparent;
+            color: white;
+            cursor: pointer;
+        }
+
+        .connect, .disconnect {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid white;
+            background-color: white;
+            color: black;
+            cursor: pointer;
+        }
+
+        .profile {
+            padding: 8px;
+            height: 32px;
+            width: 32px;
+            @include c.center();
+            color: white;
+            border: 2px solid white;
+            border-radius: 50%;
+        }
     }
 }

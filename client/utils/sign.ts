@@ -1,17 +1,19 @@
-import { SignatureData, SignatureRequestOptions, useConnect } from "@stacks/connect-react";
+import { openSignatureRequestPopup } from '@stacks/connect';
+import { StacksTestnet } from '@stacks/network';
 
-const { sign } = useConnect();
-const signmessage = async () => {
-    const options: SignatureRequestOptions = {
-        message: "authentication",
+export default async function provesign() {
+    const message = 'prove you own your wallet';
+
+    openSignatureRequestPopup({
+        message,
+        network: new StacksTestnet(), // for mainnet, `new StacksMainnet()`
         appDetails: {
-            name: "rheo",
-            icon: window.location.origin + "/logo512.png",
+            name: 'My App',
+            icon: window.location.origin + '/my-app-logo.svg',
         },
-        onFinish(data: SignatureData) {
+        onFinish(data) {
             console.log('Signature of the message', data.signature);
-            console.log('User public key:', data.publicKey);
+            console.log('Use public key:', data.publicKey);
         },
-    };
-    await sign(options);
-};
+    });
+}

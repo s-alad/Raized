@@ -6,8 +6,6 @@ import { AppConfig, showConnect, SignatureData, SignatureRequestOptions, UserSes
 const appConfig = new AppConfig(["store_write", "publish_data"]);
 export const userSession = new UserSession({ appConfig });
 
-import s from "./authentication.module.scss";
-
 function authenticate() {
     showConnect({
         appDetails: {
@@ -24,23 +22,20 @@ function authenticate() {
 
 function disconnect() { userSession.signUserOut("/"); }
 
-function Connect() {
+export default function Connect() {
     const [mounted, setMounted] = useState(false);
     useEffect(() => setMounted(true), []);
 
     if (mounted && userSession.isUserSignedIn()) {
         return (
-            <button className={s.disconnect} onClick={disconnect}>
+            <button onClick={disconnect}>
                 Disconnect Wallet
             </button>
         );
     }
-    "Connect"
     return (
-        <button className={s.connect} onClick={authenticate}>
+        <button onClick={authenticate}>
             Connect Wallet
         </button>
     );
 };
-
-export default Connect;
