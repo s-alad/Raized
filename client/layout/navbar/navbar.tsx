@@ -23,7 +23,7 @@ export default function Navbar() {
                 mounted && userSession.isUserSignedIn() ? "signed in" : "not signed in"
             }
             <span> 
-                <button>
+                <button className={s.cta}>
                     get funded
                 </button>
                 <Connect />
