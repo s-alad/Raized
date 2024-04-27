@@ -1,0 +1,17 @@
+@use "../../styles/background.scss" as bg;
+@use "../../styles/common.scss" as c;
+@use "../../styles/palette.scss" as p;
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background-color: p.$orange;
+
+    .rheo {
+        color: white;
+        font-size: 32px;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+}

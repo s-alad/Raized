@@ -1,0 +1,9 @@
+@use "../styles/background.scss" as bg;
+@use "../styles/common.scss" as c;
+
+.main {
+    height: 100%;
+    width: 100%;
+    @include bg.background();
+    @include c.center();
+}

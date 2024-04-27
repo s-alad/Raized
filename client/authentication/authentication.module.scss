@@ -1,0 +1,10 @@
+@use "../styles/palette.scss" as p;
+
+.connect, .disconnect {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid white;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
