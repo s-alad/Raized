@@ -1,14 +1,11 @@
 import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 
-
+import s from "./index.module.scss"
 
 import { useEffect, useState } from "react";
 
 import { Connect } from "@stacks/connect-react";
-
 import ConnectWallet, { userSession } from "../components/ConnectWallet";
 import ContractCallVote from "../components/ContractCallVote";
 
@@ -35,7 +32,7 @@ export default function Home() {
         userSession,
       }}
     >
-      <main className={styles.main}>  
+      <main>  
 
         <div>
           {/* ConnectWallet file: `./src/components/ConnectWallet.js` */}
