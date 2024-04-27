@@ -8,6 +8,7 @@ import { useAuth } from "@/authentication/authcontext";
 // Many of these routes do not exits yet. That's okay (:
 const protectedRoutes = [
     "/profile",
+    "/onboarding",
 ];
 
 export default function RedirectBasedOnAuth({ children }: { children: React.ReactNode }) {
@@ -15,7 +16,7 @@ export default function RedirectBasedOnAuth({ children }: { children: React.Reac
      * This is a higher level component who's job it is to redirect the user to the home page if they are not authenticated but attempt to navigate to a protected route.
      */
 
-    const { user } = useAuth();
+    const { user, loading, raiser } = useAuth();
 
     const [calledPush, setCalledPush] = useState(false);
     const router = useRouter();
@@ -25,6 +26,10 @@ export default function RedirectBasedOnAuth({ children }: { children: React.Reac
 
         /* console.log("REDI SIGN", user?.isUserSignedIn()); */
 
+        if (loading) {
+            return;
+        } else {}
+
         if (protectedRoutes.includes(currentRoute)) {
             if ((!user?.isUserSignedIn() && !calledPush)) {
                 setCalledPush(true);
@@ -32,11 +37,34 @@ export default function RedirectBasedOnAuth({ children }: { children: React.Reac
                 return;
             }
 
+            if (raiser && !raiser.onboarded && currentRoute !== "/onboarding") {
+                console.log("pushing to onboarding");
+                setCalledPush(true);
+                router.push("/onboarding");
+                return;
+            } else if (raiser && raiser.onboarded && currentRoute === "/onboarding") {
+                console.log("pushing to /");
+                setCalledPush(true);
+                router.push("/");
+                return;
+            }
+
+
         } else if (currentRoute === "/") {
             console.log("current route is /");
+
+            if (user) {
+                if (raiser && !raiser.onboarded) {
+                    console.log("pushing to onboarding");
+                    setCalledPush(true);
+                    router.push("/onboarding");
+                    return;
+                } 
+            }
+
         }
 
-    }, [calledPush, currentRoute, router]);
+    }, [calledPush, currentRoute, router, raiser, user, loading]);
 
     return children;
 };

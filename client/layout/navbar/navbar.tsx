@@ -11,7 +11,7 @@ import provesign from "@/utils/sign";
 export default function Navbar() {
     const router = useRouter();
 
-    const {user, disconnect, connect} = useAuth()
+    const {user, raiser, disconnect, connect} = useAuth()
 
     const [mounted, setMounted] = useState(false);
     useEffect(() => setMounted(true), []);
@@ -46,7 +46,9 @@ export default function Navbar() {
                 {
                     mounted && user?.isUserSignedIn() && 
                     <div className={s.profile}
-                        onClick={provesign}
+                        onClick={() => {
+                            console.log(raiser)
+                        }}
                     >
                         <FaUser />
                     </div>

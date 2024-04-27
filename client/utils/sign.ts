@@ -4,7 +4,10 @@ import { StacksTestnet } from '@stacks/network';
 export default async function provesign() {
     const message = 'prove you own your wallet';
 
-    openSignatureRequestPopup({
+    let sig;
+    let pub;
+
+    await openSignatureRequestPopup({
         message,
         network: new StacksTestnet(), // for mainnet, `new StacksMainnet()`
         appDetails: {
@@ -14,6 +17,11 @@ export default async function provesign() {
         onFinish(data) {
             console.log('Signature of the message', data.signature);
             console.log('Use public key:', data.publicKey);
+
+            sig = data.signature;
+            pub = data.publicKey;
         },
     });
+
+    return { sig, pub };
 }
