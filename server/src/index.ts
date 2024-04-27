@@ -4,6 +4,7 @@ import cors from "cors";
 import { MongoClient, ServerApiVersion } from "mongodb";
 
 import mainrouter from './main/main.router';
+import usersrouter from './users/users.router';
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ app.get('/', (_: Request, res: Response) => {
 })
 
 app.use('/', mainrouter);
+app.use('/users', usersrouter);
 
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
