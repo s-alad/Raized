@@ -1,0 +1,13 @@
+.projects {
+    display: flex;
+    flex-direction: column;
+    padding: 40px 200px;
+
+    .project {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        border: 2px solid black;
+        border-radius: 4px;
+    }
+}

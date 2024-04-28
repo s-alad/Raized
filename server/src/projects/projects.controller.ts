@@ -19,6 +19,8 @@ export const getmyprojects = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'authentication failure' });
         }
 
+        console.log("getting projects for", publickey);
+
         const userdata = await mdb.db("crowd").collection('users').findOne({ _id: publickey });
         console.log(userdata);
 
@@ -60,6 +62,8 @@ export const startproject = async (req: Request, res: Response) => {
                 creator: publickey,
                 projectname,
                 projectuid,
+                created: new Date(),
+                
             } 
         }, 
         { upsert: true,}
