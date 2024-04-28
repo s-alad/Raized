@@ -12,7 +12,7 @@ export default function Statistics() {
         <section className={s.statistics}>
             {
                 statistics.map((stat, i) => (
-                    <div className={s.stat}>
+                    <div className={s.stat} key={i}>
                         <div className={s.quantity}>{stat.quantity}</div>
                         <div className={s.label}>{stat.label}</div>
                     </div>

@@ -4,25 +4,47 @@
 
 
 .fullproject {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
     img {
         border-left: 8px solid p.$orange;
         width: 100%;
+        height: 320px;
+        max-height: 320px;
+        object-fit: cover;
     }
     .name {
         font-size: 24px;
         font-weight: bold;
-        margin-top: 10px;
     }
     .expiry {
         font-size: 16px;
         color: gray;
     }
-    .progress {
-        font-size: 16px;
-        color: p.$orange;
-    }
     .description {
         margin-top: 10px;
         font-size: 18px;
+    }
+    .raised {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .bar {
+            width: 240px;
+            height: 30px;
+            border: 2px solid p.$orange;
+            border-radius: 4px;
+            padding: 8px;
+        }
+        .fill {
+            background-color: p.$orange;
+            height: 100%;
+            border-radius: 1px;
+        }
+        p {
+            font-weight: bold;
+        }
     }
 }

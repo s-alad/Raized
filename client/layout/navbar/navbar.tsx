@@ -30,7 +30,9 @@ export default function Navbar() {
 
     return (
         <nav className={s.nav}>
-            <div className={s.rheo}>
+            <div className={s.rheo}
+                onClick={() => { router.push("/") }}
+            >
                 Raise
             </div>
             <div className={s.search}>

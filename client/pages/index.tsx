@@ -10,13 +10,24 @@ import s from "./index.module.scss"
 import Statistics from "@/components/statistics/statistics";
 import FullProject from "@/components/project/full/fullproject";
 import MiniProject from "@/components/project/mini/miniproject";
-
+import { CVAR } from "@/utils/constant";
+import { useAuth } from "@/authentication/authcontext";
+import Project from "@/models/project";
 
 export default function Home() {
 
+  const {user, raiser} = useAuth();
+  const [featuredProject, setFeaturedProject] = useState<Project>();
+  const [projects, setProjects] = useState<Project[]>();
+
   // hydration
   const [isClient, setIsClient] = useState(false);
-  useEffect(() => { setIsClient(true); }, []);
+  useEffect(() => { 
+    setIsClient(true);
+    if (user) {
+      getfeaturedproject()
+    }
+  }, [user]);
   // end hydration
 
   const statistics = [
@@ -24,6 +35,41 @@ export default function Home() {
     { quantity: "$100,000,000", label: "raised" },
     { quantity: "100,000", label: "wallets" },
   ]
+
+  async function getprojects(fid: string) {
+    const response = await fetch(`${CVAR}/projects/get-projects`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "publickey": `${raiser?.publickey}`,
+          "signature": `${raiser?.signature}`,
+        },
+        body: JSON.stringify({ publickey: raiser?.publickey }),
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    setProjects((data.projects as Project[]).filter((project: Project) => project.projectuid !== fid));
+    return data;
+  }
+
+  async function getfeaturedproject() {
+    const response = await fetch(`${CVAR}/projects/get-featured-project`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "publickey": `${raiser?.publickey}`,
+          "signature": `${raiser?.signature}`,
+        },
+      }
+    );
+    const data = await response.json();
+    setFeaturedProject(data.project as Project);
+    getprojects((data.project as Project).projectuid);
+    return data;
+  }
 
   if (!isClient) return (<Loader />)
 
@@ -47,15 +93,16 @@ export default function Home() {
         <section className={s.projects}>
           <div className={s.left}>
             <div>Featured Project:</div>
-            <FullProject />
+            <FullProject project={featuredProject} />
           </div>
           <div className={s.right}>
               <div>Recommended Projects:</div>
               <div className={s.recommended}>
-                <MiniProject />
-                <MiniProject />
-                <MiniProject />
-                <MiniProject />
+                {
+                  projects?.splice(0, 4).map((project, index) => (
+                    <MiniProject key={index} project={project} />
+                  ))
+                }
               </div>
           </div>
         </section>

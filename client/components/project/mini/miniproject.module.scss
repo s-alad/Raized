@@ -4,9 +4,11 @@
 
 
 .miniproject {
+    cursor: pointer;
     img {
         border-left: 8px solid p.$orange;
         width: 100%;
+        height: 200px;
     }
     .name {
         font-size: 24px;

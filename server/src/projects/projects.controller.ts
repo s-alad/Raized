@@ -16,7 +16,12 @@ const message = 'prove you own your wallet';
 
 export const getprojects = async (req: Request, res: Response) => {
 
-    res.status(200).json({ message: 'get-projects' });
+    // get all projects, limit to 10
+    const projects = await mdb.db("crowd").collection('projects').find().limit(10).toArray();
+    console.log("many");
+    console.log(projects);
+
+    res.status(200).json({ projects });
 };
 
 export const getmyprojects = async (req: Request, res: Response) => {
@@ -143,6 +148,24 @@ export const uploadproject = async (req: Request, res: Response) => {
         res.status(200).json({ message: 'deployed' });
     } catch (error) {
         console.log(error);
+        res.status(500).json({ error });
+    }
+}
+
+export const getfeaturedproject = async (req: Request, res: Response) => {
+    try {
+        const projectdata = await mdb.db("crowd").collection('projects').findOne({ featured: true });
+        console.log(projectdata);
+
+        // if no featured project, return a random project
+        if (!projectdata) {
+            const projectdata = await mdb.db("crowd").collection('projects').findOne();
+            res.status(200).json({ project: projectdata });
+            return;
+        }
+
+        res.status(200).json({ project: projectdata });
+    } catch (error) {
         res.status(500).json({ error });
     }
 }

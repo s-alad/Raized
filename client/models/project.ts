@@ -1,7 +1,7 @@
 
 import Milestone from './milestone';
 
-export default interface CreateProject {
+export interface CreateProject {
     projectpunchline: string;
     projectdescription: string;
     /* projectmarkdown: string; */
