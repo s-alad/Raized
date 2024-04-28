@@ -24,6 +24,7 @@ export default function Onboarding() {
                 "signature": `${raiser?.signature}`
             },
             body: JSON.stringify({
+                publickey: raiser?.publickey,
                 name: data.name,
                 email: data.email,
             }),
