@@ -2,7 +2,7 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import { MongoClient, ServerApiVersion } from "mongodb";
-
+import { generateWallet, generateSecretKey } from '@stacks/wallet-sdk';
 import mainrouter from './main/main.router';
 import usersrouter from './users/users.router';
 import projectsrouter from './projects/projects.router';
@@ -39,11 +39,22 @@ app.use('/main', mainrouter);
 app.use('/users', usersrouter);
 app.use('/projects', projectsrouter);
 
-const read = readFileSync('./Campaign.clar').toString();
-console.log(read);
-app.get('/contract', (_: Request, res: Response) => {
-    res.status(200).send(read);
-})
+
+async function init() {
+    const password = 'password';
+    const secretKey = generateSecretKey();
+    console.log("secretKey")
+    const sk = "regret enforce expect gloom beach orange mixture dinosaur toss leave frost more please penalty gain vivid test coconut marble shine basket defense pumpkin cannon"
+    console.log(secretKey);
+        const wallet = await generateWallet({
+        secretKey: sk,
+        password,
+    });
+
+    console.log(wallet.configPrivateKey)
+    console.log(wallet.encryptedSecretKey)
+}
+init();
 
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);

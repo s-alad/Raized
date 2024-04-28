@@ -60,14 +60,8 @@ export default function Projects() {
             if (uploadres.ok) {
                 console.log("project uploaded successfully");
 
-                /* const campaignres = await fetch(`${CVAR}/contract`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }); */
+                /*
                 const campaignres = await fetch('/Campaign.clar')
-
                 const campagin = await (await campaignres.text()).toString();
                 console.log(campagin);
 
@@ -84,7 +78,7 @@ export default function Projects() {
                 const transaction = await makeContractDeploy(txOptions);
 
                 const broadcastResponse = await broadcastTransaction(transaction, network);
-                const txId = broadcastResponse.txid;
+                const txId = broadcastResponse.txid; */
             }
         }
         reader.onerror = error => console.log(error);

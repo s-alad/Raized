@@ -1,11 +1,16 @@
 import { Request, Response } from 'express';
 import { mdb } from '..';
-
+import { makeContractDeploy, broadcastTransaction, AnchorMode } from '@stacks/transactions';
+import { StacksTestnet, StacksMainnet, StacksDevnet } from '@stacks/network';
 import { verifyMessageSignatureRsv } from '@stacks/encryption';
 import { PushOperator } from 'mongodb';
+import { generateWallet, generateSecretKey } from '@stacks/wallet-sdk';
+
+const network = new StacksTestnet();
 
 import { v4 as uuidv4 } from 'uuid';
 import CreateProjectSuperset from './project';
+import { readFileSync } from 'fs';
 
 const message = 'prove you own your wallet';
 
@@ -92,8 +97,24 @@ export const uploadproject = async (req: Request, res: Response) => {
         }: CreateProjectSuperset = req.body;
     
         const publickey = req.headers['publickey'] as string as any;
-    
-        /* console.log(projectdisplayimage); */
+
+        // deploy contract
+
+        const txOptions = {
+            contractName: projectuid,
+            codeBody: readFileSync('./Campaign.clar').toString(),
+            senderKey: 'be33449aaa5b1028e8a42e78be6bdbb9822fb4cfba6b68fbcde9931a112b0e4f',
+            network,
+            anchorMode: AnchorMode.Any,
+        };
+
+        const transaction = await makeContractDeploy(txOptions);
+        console.log(transaction);
+        const broadcastResponse = await broadcastTransaction(transaction, network);
+        console.log(broadcastResponse);
+
+        const txId = broadcastResponse.txid;
+        console.log(txId);
     
         // update the project with the rest of the data
     
@@ -106,7 +127,8 @@ export const uploadproject = async (req: Request, res: Response) => {
                     expiry,
                     fundinggoal,
                     milestones,
-                    /* deployed: true, */
+                    deployed: true,
+                    deployedcontract: `ST3Q0RC31AXX3DYX708QKVNBWT9KTSKWYKDB7PN2J.${projectuid}`,
                 } 
             }
         );
