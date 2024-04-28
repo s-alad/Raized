@@ -1,0 +1,23 @@
+@use "../../styles/background.scss" as bg;
+@use "../../styles/common.scss" as c;
+@use "../../styles/palette.scss" as p;
+
+.subnav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 60px;
+    background-color: p.$orange;
+    padding-bottom: 8px;
+    color: black;
+    gap: 40px;
+
+    .sub {
+        color: black;
+        font-weight: bold;
+        border-bottom: 2px solid transparent;
+    }
+    .active {
+        border-bottom: 2px solid white;
+    }
+}

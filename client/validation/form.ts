@@ -17,6 +17,16 @@ export type OnboardingFormData = {
     email?: string;
 };
 
+export type CreateProjectFormData = {
+    projectname: string;
+    projectpunchline: string;
+    projectdescription: string;
+    projectmarkdown: string;
+    projectimages: string[];
+    tags: string[];
+    // creator: string;
+};
+
 export interface GenericFormField<T extends FieldValues> extends DefaultFormField{
     register: UseFormRegister<T>;
     control?: Control<T>;

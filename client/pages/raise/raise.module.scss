@@ -8,7 +8,12 @@
     padding-top: 40px;
     flex-direction: column;
     align-items: center;
-    gap: 40px;
+    gap: 36px;
+
+    h1 {
+        font-size: 42px;
+        font-weight: bold;
+    }
 
     .getstarted {
         padding: 14px;
@@ -17,6 +22,7 @@
         cursor: pointer;
         font-weight: bold;
         border-radius: 4px;
+        font-size: 20px;
     }
 
     .divider {

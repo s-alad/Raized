@@ -5,7 +5,7 @@ import { useAuth } from "@/authentication/authcontext";
 
 export default function Raise() {
 
-    const {user} = useAuth()
+    const {user, connect} = useAuth()
 
     const faq = [
         {
@@ -26,7 +26,9 @@ export default function Raise() {
         return (
             <main className={s.raise}>
                 <h1>Raise money for your future project</h1>
-                <button className={s.getstarted}>
+                <button className={s.getstarted}
+                    onClick={connect}
+                >
                     Connect Wallet & Get Started
                 </button>
                 <div className={s.divider}></div>
@@ -40,16 +42,16 @@ export default function Raise() {
                         ))
                     }
                 </div>
-               {/*  <div className={s.testimonials}>
-
-                </div> */}
             </main>
         )
     }
 
     return (
         <main className={s.raise}>
-            <h1>Let's get you started</h1>
+            <h1>Let's get your project on the moon </h1>
+            <form className={s.form}>
+            </form>
+
         </main>
     )
 }
