@@ -41,7 +41,12 @@ export const getprojectsbysearch = async (req: Request, res: Response) => {
                     }
                 }
             }
-        }, 
+        },
+        {
+            $match: {
+                deployed: true // Only include documents where deployed is true
+            }
+        },
     ];
 
     const cursor = collection.aggregate(agg);
@@ -183,12 +188,15 @@ export const uploadproject = async (req: Request, res: Response) => {
 
 export const getfeaturedproject = async (req: Request, res: Response) => {
     try {
+        console.log("getting featured project");
         const projectdata = await mdb.db("crowd").collection('projects').findOne({ featured: true, deployed: true });
         console.log(projectdata);
 
         // if no featured project, return a random project
         if (!projectdata) {
-            const projectdata = await mdb.db("crowd").collection('projects').findOne();
+            console.log("no featured project");
+            const projectdata = await mdb.db("crowd").collection('projects').findOne({deployed: true});
+            console.log(projectdata);
             res.status(200).json({ project: projectdata });
             return;
         }

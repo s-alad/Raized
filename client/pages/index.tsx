@@ -25,9 +25,7 @@ export default function Home() {
   const [isClient, setIsClient] = useState(false);
   useEffect(() => { 
     setIsClient(true);
-    if (user) {
-      getfeaturedproject()
-    }
+    getfeaturedproject();
   }, [user]);
   // end hydration
 

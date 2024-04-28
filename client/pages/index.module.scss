@@ -47,14 +47,19 @@
         .right {
             flex: 1;
             .recommended {
-                display: flex;
-                flex-wrap: wrap;
+                /* display: flex;
+                flex-wrap: wrap; */
                 width: 100%;
                 gap: 40px;
+                grid-template-columns: repeat(2, 1fr);
+                width: 100%;
+                gap: 40px;
+                display: grid;
+                
         
                 .project {
-                    flex: 1;
-                    max-width: 50%;
+                    /* flex: 1;
+                    max-width: 50%; */
                 }
             }
         }

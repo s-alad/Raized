@@ -4,16 +4,11 @@ import Gun from "gun";
 import s from "./dao.module.scss";
 import { useRouter } from "next/router";
 import { useAuth } from "@/authentication/authcontext";
-import {
-    makeContractCall,
-    broadcastTransaction,
-    AnchorMode,
-    FungibleConditionCode,
-    makeStandardSTXPostCondition,
-    bufferCVFromString,
-    callReadOnlyFunction,
-  } from '@stacks/transactions';
-import { StacksDevnet } from "@stacks/network";
+import { StacksDevnet, StacksMainnet } from "@stacks/network";
+import { openContractCall } from '@stacks/connect';
+import { StacksTestnet } from '@stacks/network';
+import { AnchorMode, PostConditionMode, stringUtf8CV } from '@stacks/transactions';
+import { bufferCVFromString, callReadOnlyFunction } from '@stacks/transactions';
 
 type Message = {
   text: string;
@@ -72,6 +67,52 @@ export default function Projects() {
     }
   };
 
+  async function freeze() {
+    openContractCall({
+      network: new StacksMainnet(),
+      anchorMode: AnchorMode.Any, // which type of block the tx should be mined in
+
+      contractAddress: 'SP194138VA57FKR364CBH0DZBCXT7RS4BJEQZ8SP3',
+      contractName: 'Campaign',
+      functionName: 'vote-to-freeze',
+      functionArgs: [],
+
+      postConditionMode: PostConditionMode.Deny, // whether the tx should fail when unexpected assets are transferred
+      postConditions: [], // for an example using post-conditions, see next example
+
+      onFinish: response => {
+        router.reload();
+      },
+      onCancel: () => {
+        // WHEN user cancels/closes pop-up
+      },
+    });
+  }
+
+  async function read() {
+    const contractAddress = 'SP194138VA57FKR364CBH0DZBCXT7RS4BJEQZ8SP3';
+    const contractName = 'Campaign';
+    const functionName = 'read-num-frozen-votes';
+    const network = new StacksMainnet();
+    const senderAddress = raiser!.stacksaddress as string;
+
+    const options = {
+      contractAddress,
+      contractName,
+      functionName,
+      functionArgs: [],
+      network,
+      senderAddress,
+    };
+
+    const result = await callReadOnlyFunction(options);;
+    console.log(result);
+  }
+
+  useEffect(() => {
+    read();
+  }, []);
+
   return (
     <>
       {frozen ? (
@@ -102,11 +143,14 @@ export default function Projects() {
           </div>
           <div className={s.milestones}>
             <h1>Milestone Submissions</h1>
+            <p>no submissions currently</p>
           </div>
           <div className={s.voteFreeze}>
-            <h1>Number of votes to freeze</h1>
-            <p>5</p>
-            <button>Freeze Project</button>
+            <h1>Number of votes left to freeze</h1>
+            <p>{5 - 0} / 5</p>
+            <button
+              onClick={freeze}
+            >Freeze Project</button>
           </div>
         </div>
       )}
