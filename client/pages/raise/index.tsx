@@ -9,10 +9,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { startProjectSchema } from "@/validation/schema";
 import Button from "@/components/button/button";
 import { CVAR } from "@/utils/constant";
+import { useRouter } from "next/router";
 
 export default function Raise() {
 
     const {user, connect, raiser} = useAuth()
+    const router = useRouter();
 
     let [loading, setLoading] = useState(false);
 
@@ -47,10 +49,13 @@ export default function Raise() {
             }),
         });
 
-        console.log(await res.json());
-        
-
+        const resdata = await res.json();
+        console.log(resdata);
+        const projectuid = resdata.projectuid;
         setLoading(false);
+
+        // redirect to the project page
+        router.push(`/projects/${projectuid}`)
     }
 
     const { register, handleSubmit, control, formState: { errors } } =
