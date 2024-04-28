@@ -1,0 +1,12 @@
+.projectid {
+    display: flex;
+    flex-direction: column;
+    padding: 40px 200px;
+    gap: 20px;
+
+
+    .projectname {
+        font-size: 42px;
+        font-weight: bold;
+    }
+}

@@ -8,7 +8,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 const message = 'prove you own your wallet';
 
-export const getprojects = async (_: Request, res: Response) => {
+export const getprojects = async (req: Request, res: Response) => {
+
+    const { projectid } = req.query;
+
     res.status(200).json({ message: 'get-projects' });
 };
 
