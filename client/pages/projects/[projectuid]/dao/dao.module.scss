@@ -17,6 +17,7 @@
             border-radius: 8px;
             display: flex;
             flex-direction: column;
+            justify-content: flex-end;
 
             div{
                 background-color: grey;
@@ -24,10 +25,19 @@
                 height: 4vh;
                 width: 30%;
                 margin-left: 0.5vw;
+                margin-right: 0.5vw;
+                margin-bottom: 0.5vh;
+                color: white;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
 
             .userMessage{
                 align-self: flex-end;
+                background-color: black;
+                color: white
             }
         }
 

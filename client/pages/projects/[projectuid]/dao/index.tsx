@@ -4,6 +4,16 @@ import Gun from "gun";
 import s from "./dao.module.scss";
 import { useRouter } from "next/router";
 import { useAuth } from "@/authentication/authcontext";
+import {
+    makeContractCall,
+    broadcastTransaction,
+    AnchorMode,
+    FungibleConditionCode,
+    makeStandardSTXPostCondition,
+    bufferCVFromString,
+    callReadOnlyFunction,
+  } from '@stacks/transactions';
+import { StacksDevnet } from "@stacks/network";
 
 type Message = {
   text: string;
@@ -20,7 +30,46 @@ export default function Projects() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const { raiser } = useAuth();
-  const userId = raiser?.stacksaddress; // Replace with your actual user ID
+  const userId = raiser?.stacksaddress;
+
+  const network = new StacksDevnet();
+
+//   async function interactWithBlockchain() {
+//   const txOptions = {
+//     contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+//     contractName: 'Campaign',
+//     functionName: 'read-funded',
+//     functionArgs: [],
+//     senderKey: 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01',
+//     validateWithAbi: true,
+//     network,
+//     anchorMode: AnchorMode.Any,
+//   };
+
+//   const respone = await callReadOnlyFunction({
+//     contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+//     contractName: 'Campaign',
+//     functionName: 'read-funded',
+//     functionArgs: [],
+//     senderAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'
+//     }
+// );
+
+// console.log(respone);
+
+//   const transaction = await makeContractCall(txOptions);
+
+//   const broadcastResponse = await broadcastTransaction(transaction, network);
+//   console.log(broadcastResponse);
+//   const txId = broadcastResponse.txid;
+// }
+
+
+    
+
+//     useEffect(() => {
+//         interactWithBlockchain();
+//     })
 
   useEffect(() => {
     const fetchMessages = async () => {
