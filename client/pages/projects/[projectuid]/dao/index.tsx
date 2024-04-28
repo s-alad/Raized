@@ -31,48 +31,11 @@ export default function Projects() {
   const [messages, setMessages] = useState<Message[]>([]);
   const { raiser } = useAuth();
   const userId = raiser?.stacksaddress;
-
-  const network = new StacksDevnet();
-
-//   async function interactWithBlockchain() {
-//   const txOptions = {
-//     contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
-//     contractName: 'Campaign',
-//     functionName: 'read-funded',
-//     functionArgs: [],
-//     senderKey: 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01',
-//     validateWithAbi: true,
-//     network,
-//     anchorMode: AnchorMode.Any,
-//   };
-
-//   const respone = await callReadOnlyFunction({
-//     contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
-//     contractName: 'Campaign',
-//     functionName: 'read-funded',
-//     functionArgs: [],
-//     senderAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'
-//     }
-// );
-
-// console.log(respone);
-
-//   const transaction = await makeContractCall(txOptions);
-
-//   const broadcastResponse = await broadcastTransaction(transaction, network);
-//   console.log(broadcastResponse);
-//   const txId = broadcastResponse.txid;
-// }
-
-
-    
-
-//     useEffect(() => {
-//         interactWithBlockchain();
-//     })
+  const [fetched, setFetched] = useState(false);
 
   useEffect(() => {
     const fetchMessages = async () => {
+      if (fetched) return;
       if (projectuid) {
         const messageIds = new Set<string>();
 
@@ -81,6 +44,7 @@ export default function Projects() {
           if (!messageIds.has(id)) {
             messageIds.add(id);
             setMessages((prevMessages) => [...prevMessages, { ...message, id }]);
+            setFetched(true);
           }
         });
 
