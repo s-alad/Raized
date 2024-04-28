@@ -11,21 +11,21 @@ import provesign from "@/utils/sign";
 export default function Navbar() {
     const router = useRouter();
 
-    const {user, raiser, connect} = useAuth()
+    const { user, raiser, connect } = useAuth()
 
     const [mounted, setMounted] = useState(false);
     useEffect(() => setMounted(true), []);
 
     const shortenString = (str: string): string => {
         if (str.length <= 8) {
-          return str;
+            return str;
         }
-        
+
         const firstPart = str.slice(0, 4);
         const lastPart = str.slice(-2);
-        
+
         return `${firstPart}...${lastPart}`;
-      };
+    };
 
 
     return (
@@ -40,28 +40,29 @@ export default function Navbar() {
                     placeholder="Search for projects"
                 />
             </div>
-            <span> 
+            <span>
                 <button className={s.cta}
-                    onClick={() => {router.push("/raise")}}
+                    onClick={() => { router.push("/raise") }}
                 >
                     Get Funded
                 </button>
                 {/* <Connect /> */}
                 {
                     mounted && user?.isUserSignedIn() ?
-                    <button className={s.disconnect}>
-                        {raiser && raiser.stacksaddress ? shortenString(raiser.stacksaddress) : ''}
-                    </button>
-                    : 
-                    <button className={s.connect} onClick={connect}>
-                        Connect Wallet
-                    </button>
+                        <button className={s.disconnect}>
+                            {raiser && raiser.stacksaddress ? shortenString(raiser.stacksaddress) : ''}
+                        </button>
+                        :
+                        <button className={s.connect} onClick={connect}>
+                            Connect Wallet
+                        </button>
                 }
                 {
-                    mounted && user?.isUserSignedIn() && 
+                    mounted && user?.isUserSignedIn() &&
                     <div className={s.profile}
                         onClick={() => {
                             console.log(raiser)
+                            router.push("/profile")
                         }}
                     >
                         <FaUser />

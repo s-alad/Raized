@@ -52,6 +52,8 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "publickey": `${raiser?.publickey}`,
+                "signature": `${raiser?.signature}`
             },
             body: JSON.stringify({
                 publickey: raiser?.publickey,
@@ -93,11 +95,11 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        "publickey": `${pub}`,
+                        "signature": `${sig}`
                     },
                     body: JSON.stringify({
                         stacksaddress: mainnetstacks,
-                        publickey: pub,
-                        signature: sig,
                         message: "prove you own your wallet",
                     }),
                 })
