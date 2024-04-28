@@ -16,7 +16,7 @@ export default function Profile() {
     }
 
     return (
-        <main>
+        <main className={s.main}>
             <h1>Profile</h1>
             <p className={s.name}>{raiser?.name}</p>
             {raiser?.email ? <p className={s.email}>{raiser?.email}</p> : ''}
