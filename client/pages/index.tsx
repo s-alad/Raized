@@ -67,7 +67,7 @@ export default function Home() {
     );
     const data = await response.json();
     setFeaturedProject(data.project as Project);
-    getprojects((data.project as Project).projectuid);
+    getprojects((data.project as Project)?.projectuid || "")
     return data;
   }
 
