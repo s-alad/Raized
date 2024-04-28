@@ -17,6 +17,10 @@ export type OnboardingFormData = {
     email?: string;
 };
 
+export type StartProjectFormData = {
+    projectname: string;
+}
+
 export type CreateProjectFormData = {
     projectname: string;
     projectpunchline: string;

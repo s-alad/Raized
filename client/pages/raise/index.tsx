@@ -2,6 +2,11 @@ import React from "react";
 
 import s from './raise.module.scss'
 import { useAuth } from "@/authentication/authcontext";
+import Input from "@/components/input/input";
+import { StartProjectFormData } from "@/validation/form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { startProjectSchema } from "@/validation/schema";
 
 export default function Raise() {
 
@@ -21,6 +26,17 @@ export default function Raise() {
             answer: "You can connect your wallet and start creating your project. You can also browse projects and contribute to them."
         }
     ]
+
+    async function onSubmit(data: StartProjectFormData) {
+        console.log(data);
+    }
+
+    const { register, handleSubmit, control, formState: { errors } } =
+    useForm<StartProjectFormData>({
+        resolver: zodResolver(startProjectSchema),
+        defaultValues: {}
+    });
+
 
     if (!user) {
         return (
@@ -49,7 +65,18 @@ export default function Raise() {
     return (
         <main className={s.raise}>
             <h1>Let's get your project on the moon </h1>
-            <form className={s.form}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+
+                <Input<StartProjectFormData>
+                    type="text"
+                    inputstyle="input"
+                    label="What Will Be Your Project's Name?"
+                    placeholder="EasyA"
+                    name="projectname"
+                    register={register}
+                    error={errors.projectname}
+                />
+                <button type="submit" className={s.submit}>Start!</button>
             </form>
 
         </main>
