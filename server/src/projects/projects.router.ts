@@ -11,5 +11,6 @@ router.get('/get-project', projectcontroller.getproject);
 router.get('/get-my-projects', projectcontroller.getmyprojects);
 router.post('/upload-project', projectcontroller.uploadproject);
 router.get('/get-featured-project', projectcontroller.getfeaturedproject);
+router.post('/update-project-fund', projectcontroller.updateprojectfund);
 
 export default router;

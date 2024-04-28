@@ -39,9 +39,24 @@ export default function Projects() {
             amount: '1000', // amount to send in microstacks
             memo: 'funding', // optional; a memo to help identify the tx
 
-            onFinish: response => {
+            onFinish: async (response) => {
                 // WHEN user confirms pop-up
                 console.log(response.txId); // the response includes the txid of the transaction
+
+                // update the project backend
+                const updateres = await fetch(`${CVAR}/projects/update-project-fund`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "publickey": `${raiser?.publickey}`,
+                        "signature": `${raiser?.signature}`
+                    },
+                    body: JSON.stringify({
+                        projectuid,
+                        amount: 1000
+                    })
+                });
+
             },
             onCancel: () => {
                 // WHEN user cancels/closes pop-up

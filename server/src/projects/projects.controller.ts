@@ -196,3 +196,32 @@ export const getfeaturedproject = async (req: Request, res: Response) => {
         res.status(500).json({ error });
     }
 }
+
+export const updateprojectfund = async (req: Request, res: Response) => {
+    try {
+        const { projectuid, amount } = req.body;
+        const publickey = req.headers['publickey'] as string as any;
+
+        const projectdata = await mdb.db("crowd").collection('projects').findOne({ _id: projectuid });
+        console.log(projectdata);
+
+        if (!projectdata) {
+            return res.status(400).json({ message: 'project not found' });
+        }
+
+        const result = await mdb.db("crowd").collection('projects').updateOne(
+            { _id: projectuid as any },
+            { $set: {
+                    amountraised: projectdata.amountraised + (amount / 1000000),
+                    backers: [...projectdata.backers, publickey],
+                } 
+            }
+        );
+
+        console.log(result);
+
+        res.status(200).json({ message: 'funded' });
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+}

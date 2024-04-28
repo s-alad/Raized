@@ -50,7 +50,7 @@ export default function Navbar() {
             <div className={s.rheo}
                 onClick={() => { router.push("/") }}
             >
-                Raise
+                Raize
             </div>
             <div className={s.search}>
                 <input

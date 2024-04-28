@@ -20,7 +20,7 @@ export default function Raise() {
 
     const faq = [
         {
-            question: "What can I raise with Raze?",
+            question: "What can I raise with Raize?",
             answer: "You can raise funds for your project, idea, or business. We support projects in all categories."
         },
         {
@@ -73,7 +73,7 @@ export default function Raise() {
     if (!user) {
         return (
             <main className={s.raise}>
-                <h1>Raise money for your future project</h1>
+                <h1>Raize money for your future project</h1>
                 <button className={s.getstarted}
                     onClick={connect}
                 >

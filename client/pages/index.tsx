@@ -89,16 +89,16 @@ export default function Home() {
     >
       <main className={s.main}>
         <h1 className={s.punchline}>
-          Raise the next big thing.
+          Raize the next big thing.
         </h1>
         <Statistics />
         <section className={s.projects}>
           <div className={s.left}>
-            <div>Featured Project:</div>
+            <div className={s.det}>Featured Project:</div>
             <FullProject project={featuredProject} />
           </div>
           <div className={s.right}>
-              <div>Recommended Projects:</div>
+              <div className={s.det}>Recommended Projects:</div>
               <div className={s.recommended}>
                 {
                   projects?.splice(0, 4).map((project, index) => (
