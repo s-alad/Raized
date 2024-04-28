@@ -41,14 +41,18 @@ export default function Raise() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "publickey": `${raiser?.publickey}`,
+                "signature": `${raiser?.signature}`
             },
             body: JSON.stringify({
                 projectname: data.projectname,
-                publickey: raiser?.publickey,
-                signature: raiser?.signature,
             }),
         });
-
+        if (res.status !== 200) {
+            setLoading(false);
+            return;
+        }
+        
         const resdata = await res.json();
         console.log(resdata);
         const projectuid = resdata.projectuid;

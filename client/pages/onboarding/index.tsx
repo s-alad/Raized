@@ -20,12 +20,12 @@ export default function Onboarding() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "publickey": `${raiser?.publickey}`,
+                "signature": `${raiser?.signature}`
             },
             body: JSON.stringify({
                 name: data.name,
                 email: data.email,
-                publickey: raiser?.publickey,
-                signature: raiser?.signature,
             }),
         });
 

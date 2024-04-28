@@ -12,11 +12,23 @@ export const getprojects = async (_: Request, res: Response) => {
     res.status(200).json({ message: 'get-projects' });
 };
 
-export const startproject = async (req: Request, res: Response) => {
-    const { publickey, signature, projectname } = req.body;
+export const getproject = async (req: Request, res: Response) => {
+    const { projectuid } = req.body;
+    if (!projectuid) {
+        return res.status(400).json({ message: 'project not found' });
+    }
 
-    const verified = verifyMessageSignatureRsv({publicKey: publickey, message, signature});
-    if (!verified) { return res.status(400).json({ message: 'signature verification failed' }) }
+    const projectdata = await mdb.db("crowd").collection('projects').findOne({ _id: projectuid });
+    console.log(projectdata);
+
+    res.status(200).json({ project: projectdata });
+}
+
+export const startproject = async (req: Request, res: Response) => {
+    console.log("!---------------------")
+    const { projectname } = req.body;
+    const publickey = req.headers['publickey'] as string as any;
+    console.log(projectname, publickey);
 
     const projectuid = uuidv4().replace(/-/g, '');
 
