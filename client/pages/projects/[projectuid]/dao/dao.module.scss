@@ -10,42 +10,44 @@
         flex-direction: column;
         align-items: center;
 
-        div{
+        .messages{
             height: 60vh;
             background-color: rgb(241, 241, 241);
             width: 40vw;
             border-radius: 8px;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
+            gap: 1vh;
+            padding: 10px;
 
-            div{
+            .message{
                 background-color: grey;
                 color: black;
                 height: 4vh;
                 width: 30%;
                 margin-left: 0.5vw;
-                margin-right: 0.5vw;
-                margin-bottom: 0.5vh;
-                color: white;
 
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                border-radius: 8px;
             }
 
             .userMessage{
                 align-self: flex-end;
-                background-color: black;
-                color: white
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
             }
         }
 
         .input{
             display: flex;
+            width: 40vw;
             background-color: transparent;
-            height: 10vh;
-            margin-top: 3vh;
+            height: 50px;
+            margin-top: 10px;
 
             input{
                 width: 75%;
@@ -55,6 +57,7 @@
             button{
                 width: 20%;
                 border: none;
+                cursor: pointer;
             }
         }
     }

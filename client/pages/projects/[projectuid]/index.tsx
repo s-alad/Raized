@@ -91,9 +91,10 @@ export default function Projects() {
                             <div className={s.creator}>stx.{project.ownerstacksaddress}</div>
                         </div>
                         <div className={s.right}>
-                            <button className={s.fund}
-                                onClick={fund}
-                            >fund!</button>
+                        <button className={s.dao} onClick={() => router.push(`/projects/${project.projectuid}/dao`)}>
+                            dao!
+                        </button>
+                        <button className={s.fund} onClick={fund}>fund!</button>
                         </div>
                     </div>
                     <div className={s.content}>

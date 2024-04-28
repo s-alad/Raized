@@ -116,11 +116,11 @@ export default function Projects() {
         <div className={s.main}>
           <div className={s.chat}>
             <h1>Chat</h1>
-            <div>
+            <div className={s.messages}>
               {messages.map((m) => (
                 <div
                   key={m.id}
-                  className={m.sender === userId ? s.userMessage : s.otherMessage}
+                  className={`${s.message} ${m.sender === userId ? s.userMessage : s.otherMessage}`}
                 >
                   {m.text}
                 </div>

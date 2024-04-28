@@ -53,7 +53,7 @@ export default function Onboarding() {
                 <Input<OnboardingFormData>
                     type="text"
                     inputstyle="input"
-                    label="First Name (optional)"
+                    label="First Name"
                     placeholder="First Name"
                     name="name"
                     register={register}
@@ -62,7 +62,7 @@ export default function Onboarding() {
                 <Input<OnboardingFormData>
                     type="email"
                     inputstyle="input"
-                    label="Your Email (optional)"
+                    label="Your Email"
                     placeholder="hello@xyz.com"
                     name="email"
                     register={register}

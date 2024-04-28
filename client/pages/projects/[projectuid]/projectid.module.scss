@@ -39,6 +39,18 @@
                 }
             }
             .right {
+                display: flex;
+                gap: 20px;
+                .dao {
+                    color: white;
+                    background-color: transparent;
+                    color: black;
+                    border: 1px solid p.$orange;
+                    padding: 16px 64px;
+                    font-size: 22px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
                 .fund {
                     background-color: p.$orange;
                     color: white;
