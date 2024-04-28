@@ -27,6 +27,8 @@ export default function Projects() {
     const { user, raiser } = useAuth();
     const [project, setProject] = useState<Project>();
 
+    let [amount, setAmount] = useState(0);
+    let [funding, setFunding] = useState(false);
     async function fund() {
 
         if (!project) { return; }
@@ -36,7 +38,7 @@ export default function Projects() {
             anchorMode: AnchorMode.Any, // which type of block the tx should be mined in
 
             recipient: project.ownerstacksaddress, // which address we are sending to
-            amount: '1000', // amount to send in microstacks
+            amount: (amount * 1000000).toString(), // amount to send in microstacks
             memo: 'funding', // optional; a memo to help identify the tx
 
             onFinish: async (response) => {
@@ -53,7 +55,7 @@ export default function Projects() {
                     },
                     body: JSON.stringify({
                         projectuid,
-                        amount: 1000
+                        amount: amount 
                     })
                 });
 
@@ -106,10 +108,23 @@ export default function Projects() {
                             <div className={s.creator}>stx.{project.ownerstacksaddress}</div>
                         </div>
                         <div className={s.right}>
-                        <button className={s.dao} onClick={() => router.push(`/projects/${project.projectuid}/dao`)}>
-                            dao!
-                        </button>
-                        <button className={s.fund} onClick={fund}>fund!</button>
+                            {
+                                !funding ? <>
+                                    <button className={s.dao} onClick={() => router.push(`/projects/${project.projectuid}/dao`)}>
+                                        dao!
+                                    </button>
+                                    <button className={s.fund} onClick={()=> setFunding(true)}>fund!</button>
+                                </> : 
+                                <div className={s.funding}>
+                                    <input type="number" placeholder="amount" 
+                                        value={amount} 
+                                        onChange={(e) => setAmount(parseInt(e.target.value))}
+                                    />
+                                    <button
+                                        onClick={fund} 
+                                    >fund</button>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className={s.content}>

@@ -132,8 +132,10 @@ export const uploadproject = async (req: Request, res: Response) => {
 
         // deploy contract
 
+        const truncatedname = projectuid.substring(0, 8);
+
         /* const txOptions = {
-            contractName: projectuid,
+            contractName: truncatedname,
             codeBody: readFileSync('./Campaign.clar').toString(),
             senderKey: 'be33449aaa5b1028e8a42e78be6bdbb9822fb4cfba6b68fbcde9931a112b0e4f',
             network,
@@ -162,12 +164,12 @@ export const uploadproject = async (req: Request, res: Response) => {
                     amountraised: 0,
                     deployed: true,
                     backers: [],
-                    deployedcontract: `ST3Q0RC31AXX3DYX708QKVNBWT9KTSKWYKDB7PN2J.${projectuid}`,
+                    deployedcontract: `ST3Q0RC31AXX3DYX708QKVNBWT9KTSKWYKDB7PN2J.${truncatedname}`,
                 } 
             }
         );
 
-        console.log(result);
+        /* console.log(result); */
         /* if (result.modifiedCount === 0) {
             return res.status(400).json({ message: 'project not found' });
         } */
