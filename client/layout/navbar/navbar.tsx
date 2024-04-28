@@ -11,10 +11,21 @@ import provesign from "@/utils/sign";
 export default function Navbar() {
     const router = useRouter();
 
-    const {user, raiser, disconnect, connect} = useAuth()
+    const {user, raiser, connect} = useAuth()
 
     const [mounted, setMounted] = useState(false);
     useEffect(() => setMounted(true), []);
+
+    const shortenString = (str: string): string => {
+        if (str.length <= 8) {
+          return str;
+        }
+        
+        const firstPart = str.slice(0, 4);
+        const lastPart = str.slice(-2);
+        
+        return `${firstPart}...${lastPart}`;
+      };
 
 
     return (
@@ -38,8 +49,8 @@ export default function Navbar() {
                 {/* <Connect /> */}
                 {
                     mounted && user?.isUserSignedIn() ?
-                    <button className={s.disconnect} onClick={disconnect}>
-                        Disconnect Wallet
+                    <button className={s.disconnect}>
+                        {raiser && raiser.stacksaddress ? shortenString(raiser.stacksaddress) : ''}
                     </button>
                     : 
                     <button className={s.connect} onClick={connect}>
@@ -54,7 +65,6 @@ export default function Navbar() {
                         }}
                     >
                         <FaUser />
-                        {raiser?.stacksaddress}
                     </div>
                 }
             </span>
