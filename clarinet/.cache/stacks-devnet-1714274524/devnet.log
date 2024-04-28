@@ -1,0 +1,14 @@
+Apr 28 03:22:06.548 INFO Checking contracts
+Apr 28 03:22:06.582 INFO Starting Devnet
+Apr 28 03:22:06.592 INFO Listening on port 20445 for Stacks chain events
+Apr 28 03:22:06.592 INFO Observing Bitcoin chain events via Stacks node
+Apr 28 03:22:06.691 INFO Initiating Devnet boot sequence (working_dir: /Users/wesjorgensen/Programming/Rheo/clarinet/./.cache/stacks-devnet-1714274524)
+Apr 28 03:22:06.707 INFO Creating network CrowdFund.devnet
+Apr 28 03:22:06.707 INFO Starting bitcoin-node
+Apr 28 03:22:07.674 INFO POST /new_mempool_tx
+Apr 28 03:22:07.676 DEBG Handling PropagateStacksMempoolEvent command
+Apr 28 03:22:12.461 ERRO Fatal: unable to create bitcoind container: Conflict. The container name "/bitcoin-node.CrowdFund.devnet" is already in use by container "cffe375aca07ca92e47858f00feb604245e261be8d80ff77ff19d837f4e332bf". You have to remove (or rename) that container to be able to reuse that name.
+Apr 28 03:22:12.463 INFO Handling Termination command
+Apr 28 03:22:12.536 INFO Pruning network and containers
+Apr 28 03:22:13.375 INFO Artifacts (logs, conf, chainstates) available here: /Users/wesjorgensen/Programming/Rheo/clarinet/./.cache/stacks-devnet-1714274524
+Apr 28 03:22:13.375 INFO ⚠️  fatal error - unable to create bitcoind container: Conflict. The container name "/bitcoin-node.CrowdFund.devnet" is already in use by container "cffe375aca07ca92e47858f00feb604245e261be8d80ff77ff19d837f4e332bf". You have to remove (or rename) that container to be able to reuse that name.
