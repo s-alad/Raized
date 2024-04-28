@@ -5,12 +5,11 @@ import { verifyMessageSignatureRsv } from '@stacks/encryption';
 import { PushOperator } from 'mongodb';
 
 import { v4 as uuidv4 } from 'uuid';
+import CreateProjectSuperset from './project';
 
 const message = 'prove you own your wallet';
 
 export const getprojects = async (req: Request, res: Response) => {
-
-    const { projectid } = req.query;
 
     res.status(200).json({ message: 'get-projects' });
 };
@@ -37,15 +36,19 @@ export const getmyprojects = async (req: Request, res: Response) => {
 }
 
 export const getproject = async (req: Request, res: Response) => {
-    const { projectuid } = req.body;
-    if (!projectuid) {
-        return res.status(400).json({ message: 'project not found' });
+    try {
+        const { projectuid } = req.query as any;
+        if (!projectuid) {
+            return res.status(400).json({ message: 'project not found' });
+        }
+
+        const projectdata = await mdb.db("crowd").collection('projects').findOne({ _id: projectuid });
+        console.log(projectdata);
+
+        res.status(200).json({ project: projectdata });
+    } catch (error) {
+        res.status(500).json({ error });
     }
-
-    const projectdata = await mdb.db("crowd").collection('projects').findOne({ _id: projectuid });
-    console.log(projectdata);
-
-    res.status(200).json({ project: projectdata });
 }
 
 export const startproject = async (req: Request, res: Response) => {
@@ -78,4 +81,44 @@ export const startproject = async (req: Request, res: Response) => {
     console.log(updateuser);
 
     res.status(200).json({ projectuid });
+}
+
+export const uploadproject = async (req: Request, res: Response) => {
+    console.log("!---------------------")
+    try {
+        const { 
+            projectuid, projectpunchline, projectdescription, 
+            projectdisplayimage, expiry, fundinggoal, milestones 
+        }: CreateProjectSuperset = req.body;
+    
+        const publickey = req.headers['publickey'] as string as any;
+    
+        console.log(projectdisplayimage);
+    
+        // update the project with the rest of the data
+    
+        const result = await mdb.db("crowd").collection('projects').updateOne(
+            { _id: projectuid as any },
+            { $set: {
+                    projectpunchline,
+                    projectdescription,
+                    projectdisplayimage,
+                    expiry,
+                    fundinggoal,
+                    milestones,
+                    deployed: true,
+                } 
+            }
+        );
+
+        console.log(result);
+        if (result.modifiedCount === 0) {
+            return res.status(400).json({ message: 'project not found' });
+        }
+    
+        res.status(200).json({ message: 'deployed' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error });
+    }
 }

@@ -1,0 +1,51 @@
+.label {
+    color: #000;
+    font-weight: bold;
+}
+
+.photo {
+    margin-top: 6px;
+    width: 180px;
+    height: 120px;
+    border: 2px solid black;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .upload {
+        position: absolute;
+        border: 2px solid black;
+        display: inline-block;
+        cursor: pointer;
+        border-radius: 100%;
+        padding-left: 14px; padding-right: 14px;
+        height: 40px;
+        width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(0, 0, 0, 0.5);
+    }
+
+    input[type=file] {
+        display: none;
+    }
+
+    img {
+        border-radius: 10px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .error {
+        position: relative;
+        text-align: center;
+        top: 40px;
+        width: 200px !important;
+        white-space: nowrap;
+        color: black;
+        font-size: 14px;
+    }
+}

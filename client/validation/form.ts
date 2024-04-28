@@ -1,3 +1,4 @@
+import Milestone from "@/models/milestone";
 import { Control, FieldError, FieldValues, Path, UseFormRegister } from "react-hook-form";
 
 export type DefaultFormField = {
@@ -13,8 +14,8 @@ export type DefaultFormField = {
 };
 
 export type OnboardingFormData = {
-    name?: string;
-    email?: string;
+    name: string;
+    email: string;
 };
 
 export type StartProjectFormData = {
@@ -22,13 +23,15 @@ export type StartProjectFormData = {
 }
 
 export type CreateProjectFormData = {
-    projectname: string;
     projectpunchline: string;
     projectdescription: string;
-    projectmarkdown: string;
-    projectimages: string[];
-    tags: string[];
-    // creator: string;
+    /* projectmarkdown: string; */
+    projectdisplayimage: File;
+    /* projectimages: string[]; */
+    /* tags: string[]; */
+    expiry: string;
+    fundinggoal: number;
+    milestones: Milestone[];
 };
 
 export interface GenericFormField<T extends FieldValues> extends DefaultFormField{

@@ -8,11 +8,19 @@ export default function Input<T extends FieldValues>({ type, inputstyle, label, 
     return (
         <div className={s.input}>
             {label && <label htmlFor={name}>{label}</label>}
-            <input 
-                type={type}
-                placeholder={placeholder}
-                {...register(name, { valueAsNumber })}
-            />
+            {
+                inputstyle === "textarea" ?
+                    <textarea
+                        placeholder={placeholder}
+                        {...register(name, { valueAsNumber })}
+                    />
+                    :
+                    <input
+                        type={type}
+                        placeholder={placeholder}
+                        {...register(name, { valueAsNumber })}
+                    />
+            }
             {error && <span className={s.error}>*{error.message}</span>}
         </div>
     )

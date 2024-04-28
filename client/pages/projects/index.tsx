@@ -70,7 +70,7 @@ export default function Projects() {
                             <div className={s.right}>
                                 <button className={s.edit}
                                     onClick={() => {
-                                        router.push(`/projects/${project.projectuid}`)
+                                        router.push(`/projects/edit/${project.projectuid}`)
                                     }}
                                 >enter</button>
                             </div>

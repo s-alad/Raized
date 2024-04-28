@@ -7,7 +7,7 @@
         color: #000;
         font-weight: bold;
     }
-    input {
+    input, textarea {
         border: 2px solid #000;
         border-radius: 10px;
         height: 40px;
@@ -19,6 +19,9 @@
         &::placeholder {
             color: gray;
         }
+    }
+    textarea {
+        padding: 10px;
     }
     span {
         margin-top: 4px;
