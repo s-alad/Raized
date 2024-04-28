@@ -23,7 +23,7 @@ export default function MiniProject({ project }: { project: Project | undefined 
                 : <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy5gvUTFXtZL2XOhaE_0sYxGqsm-T56bbJ1A&s" />
             }
             <div className={s.name}>{project.projectname}</div>
-            <div className={s.creator}>{project.ownerstacksaddress}</div>
+            <p className={s.creator}>{project.ownerstacksaddress}</p>
             <div className={s.expiry}>
             <div className={s.expiry}>{getDaysUntilExpiry(project.expiry)} days left</div>
             </div>

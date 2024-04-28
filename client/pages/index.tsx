@@ -102,7 +102,7 @@ export default function Home() {
               <div className={s.recommended}>
                 {
                   projects?.splice(0, 4).map((project, index) => (
-                    <MiniProject key={index} project={project} />
+                    <div className={s.project}><MiniProject key={index} project={project} /></div>
                   ))
                 }
               </div>
