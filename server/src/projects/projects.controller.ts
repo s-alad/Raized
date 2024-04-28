@@ -6,7 +6,7 @@ import { verifyMessageSignatureRsv } from '@stacks/encryption';
 import { PushOperator } from 'mongodb';
 import { generateWallet, generateSecretKey } from '@stacks/wallet-sdk';
 
-const network = new StacksTestnet();
+const network = new StacksMainnet();
 
 import { v4 as uuidv4 } from 'uuid';
 import CreateProjectSuperset from './project';
