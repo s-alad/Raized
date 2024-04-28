@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 
 import s from "./onboarding.module.scss";
 import { useAuth } from "@/authentication/authcontext";
+import { CVAR } from "@/utils/constant";
 
 export default function Onboarding() {
 
@@ -15,7 +16,7 @@ export default function Onboarding() {
     async function onSubmit(data: OnboardingFormData) {
         console.log(data);
 
-        let res = await fetch("http://localhost:5000/users/onboard-user", {
+        let res = await fetch(`${CVAR}/users/onboard-user`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

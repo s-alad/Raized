@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
 import { StacksTestnet } from '@stacks/network';
 import provesign from "@/utils/sign";
+import { CVAR } from "@/utils/constant";
 
 const appConfig = new AppConfig(["store_write", "publish_data"]);
 const userSession = new UserSession({ appConfig });
@@ -47,7 +48,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     const [loading, setLoading] = useState<boolean>(true);
 
     async function askToRefresh() {
-        const res = await fetch("http://localhost:5000/users/get-user", {
+        const res = await fetch(`${CVAR}/users/get-user`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -88,7 +89,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
                 const {pub, sig} = await provesign();
 
-                const res = await fetch("http://localhost:5000/users/add-user-if-not-exists", {
+                const res = await fetch(`${CVAR}/users/add-user-if-not-exists`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

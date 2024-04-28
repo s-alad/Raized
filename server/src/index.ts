@@ -5,10 +5,11 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 
 import mainrouter from './main/main.router';
 import usersrouter from './users/users.router';
+import projectsrouter from './projects/projects.router';
 
 dotenv.config();
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 const app: Express = express();
 app.use(express.json({ limit: '50mb' }));
@@ -35,7 +36,7 @@ app.get('/', (_: Request, res: Response) => {
 
 app.use('/main', mainrouter);
 app.use('/users', usersrouter);
-app.use('/projects', mainrouter);
+app.use('/projects', projectsrouter);
 
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);

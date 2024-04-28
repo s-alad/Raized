@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import s from './raise.module.scss'
 import { useAuth } from "@/authentication/authcontext";
@@ -7,10 +7,14 @@ import { StartProjectFormData } from "@/validation/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { startProjectSchema } from "@/validation/schema";
+import Button from "@/components/button/button";
+import { CVAR } from "@/utils/constant";
 
 export default function Raise() {
 
-    const {user, connect} = useAuth()
+    const {user, connect, raiser} = useAuth()
+
+    let [loading, setLoading] = useState(false);
 
     const faq = [
         {
@@ -28,7 +32,25 @@ export default function Raise() {
     ]
 
     async function onSubmit(data: StartProjectFormData) {
+        setLoading(true);
         console.log(data);
+
+        let res = await fetch(`${CVAR}/projects/start-project`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                projectname: data.projectname,
+                publickey: raiser?.publickey,
+                signature: raiser?.signature,
+            }),
+        });
+
+        console.log(await res.json());
+        
+
+        setLoading(false);
     }
 
     const { register, handleSubmit, control, formState: { errors } } =
@@ -76,7 +98,7 @@ export default function Raise() {
                     register={register}
                     error={errors.projectname}
                 />
-                <button type="submit" className={s.submit}>Start!</button>
+                <Button text="Start Project" type="submit" loading={loading}/>
             </form>
 
         </main>
