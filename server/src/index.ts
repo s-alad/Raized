@@ -21,7 +21,7 @@ const mongourl = process.env.MDBURL || "";
 export const mdb = new MongoClient(mongourl, {
     serverApi: {
         version: ServerApiVersion.v1,
-        strict: true,
+        strict: false,
         deprecationErrors: true,
     }
 });

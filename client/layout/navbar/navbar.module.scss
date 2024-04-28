@@ -29,6 +29,7 @@
             width: 34px;
             @include c.center();
             color: black;
+            cursor: pointer;
         }
         input {
             padding: 8px;

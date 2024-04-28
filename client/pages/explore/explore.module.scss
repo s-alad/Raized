@@ -1,0 +1,14 @@
+.explore {
+    padding-top: 100px;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 100px 200px;
+    
+    .projects {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        
+        gap: 40px;
+    }
+}

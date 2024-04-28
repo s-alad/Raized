@@ -19,6 +19,7 @@ export default function Home() {
   const {user, raiser} = useAuth();
   const [featuredProject, setFeaturedProject] = useState<Project>();
   const [projects, setProjects] = useState<Project[]>();
+  const [loading, setLoading] = useState(false);
 
   // hydration
   const [isClient, setIsClient] = useState(false);
@@ -39,22 +40,23 @@ export default function Home() {
   async function getprojects(fid: string) {
     const response = await fetch(`${CVAR}/projects/get-projects`,
       {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           "publickey": `${raiser?.publickey}`,
           "signature": `${raiser?.signature}`,
         },
-        body: JSON.stringify({ publickey: raiser?.publickey }),
       }
     );
     const data = await response.json();
     console.log(data);
     setProjects((data.projects as Project[]).filter((project: Project) => project.projectuid !== fid));
+    setLoading(false);
     return data;
   }
 
   async function getfeaturedproject() {
+    setLoading(true);
     const response = await fetch(`${CVAR}/projects/get-featured-project`,
       {
         method: "GET",
@@ -71,7 +73,7 @@ export default function Home() {
     return data;
   }
 
-  if (!isClient) return (<Loader />)
+  if (!isClient || loading) return (<Loader />)
 
   return (
     <Connect

@@ -15,14 +15,41 @@ import { readFileSync } from 'fs';
 const message = 'prove you own your wallet';
 
 export const getprojects = async (req: Request, res: Response) => {
-
-    // get all projects, limit to 10
-    const projects = await mdb.db("crowd").collection('projects').find().limit(10).toArray();
+    // get projects where deployed is true
+    const projects = await mdb.db("crowd").collection('projects').find({ deployed: true }).toArray();
     console.log("many");
     console.log(projects);
 
     res.status(200).json({ projects });
 };
+
+export const getprojectsbysearch = async (req: Request, res: Response) => {
+
+    const { search } = req.query as any;
+
+    const collection = mdb.db("crowd").collection("projects");
+    const q = search.toString();
+
+    const agg = [
+        {
+            $search: {
+                index: "default", 
+                text: {
+                    query: q,
+                    path: {
+                        wildcard: "*"
+                    }
+                }
+            }
+        }, 
+    ];
+
+    const cursor = collection.aggregate(agg);
+    const results = await cursor.limit(20).toArray();
+    console.log(results);
+
+    res.status(200).json({ projects: results });
+}
 
 export const getmyprojects = async (req: Request, res: Response) => {
     try {
@@ -154,7 +181,7 @@ export const uploadproject = async (req: Request, res: Response) => {
 
 export const getfeaturedproject = async (req: Request, res: Response) => {
     try {
-        const projectdata = await mdb.db("crowd").collection('projects').findOne({ featured: true });
+        const projectdata = await mdb.db("crowd").collection('projects').findOne({ featured: true, deployed: true });
         console.log(projectdata);
 
         // if no featured project, return a random project

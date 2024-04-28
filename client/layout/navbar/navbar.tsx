@@ -12,9 +12,26 @@ export default function Navbar() {
     const router = useRouter();
 
     const { user, raiser, connect } = useAuth()
-
+    
     const [mounted, setMounted] = useState(false);
     useEffect(() => setMounted(true), []);
+
+    const [search, setSearch] = useState("");
+
+    async function lookup() {
+        if (search) {
+            // if not currently on /explore page, then navigate to explore with search query in url
+            if (!router.pathname.includes("/explore")) {
+                setSearch("")
+                router.push(`/explore?search=${search}`);
+            } else {
+                // if currently on /explore page, then update the search query in url
+                setSearch("")
+                router.replace(`/explore?search=${search}`);
+            }
+            
+        }
+    }
 
     const shortenString = (str: string): string => {
         if (str.length <= 8) {
@@ -36,11 +53,15 @@ export default function Navbar() {
                 Raise
             </div>
             <div className={s.search}>
-                <div className={s.magnify}><FaSearch /></div>
                 <input
                     type="text"
                     placeholder="Search for projects"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                 />
+                <div className={s.magnify}
+                    onClick={lookup}
+                ><FaSearch /></div>
             </div>
             <span>
                 <button className={s.cta}
