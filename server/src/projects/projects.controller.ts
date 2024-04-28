@@ -12,6 +12,27 @@ export const getprojects = async (_: Request, res: Response) => {
     res.status(200).json({ message: 'get-projects' });
 };
 
+export const getmyprojects = async (req: Request, res: Response) => {
+    try {
+        const publickey = req.headers['publickey'] as string as any;
+        if (!publickey) {
+            return res.status(400).json({ message: 'authentication failure' });
+        }
+
+        const userdata = await mdb.db("crowd").collection('users').findOne({ _id: publickey });
+        console.log(userdata);
+
+        const projects = await mdb.db("crowd").collection('projects').find({ creator: publickey }).toArray();
+        console.log(projects);
+
+        res.status(200).json({ projects });
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+    
+    
+}
+
 export const getproject = async (req: Request, res: Response) => {
     const { projectuid } = req.body;
     if (!projectuid) {
