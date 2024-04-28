@@ -5,5 +5,10 @@
     height: 100%;
     width: 100%;
     @include bg.background();
-    @include c.center();
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    /* @include c.center(); */
 }

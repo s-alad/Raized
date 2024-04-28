@@ -14,12 +14,12 @@ interface Raiser {
     publickey?: string;
     stacksaddress?: string;
     signature?: string;
-    user: UserSession | null;
+    user: UserSession | null | undefined;
 }
 
 interface IAuthContext {
-    raiser: Raiser | null;
-    user: UserSession | null;
+    raiser: Raiser | null | undefined;
+    user: UserSession | null | undefined;
     loading: boolean;
     askToRefresh: () => void;
     connect: () => void;
@@ -46,8 +46,32 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     const [user, setUser] = useState<UserSession | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
-    function askToRefresh() {
-        setUser(userSession.isUserSignedIn() ? userSession : null);
+    async function askToRefresh() {
+        const res = await fetch("http://localhost:5000/users/get-user", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                publickey: raiser?.publickey,
+            }),
+        });
+
+        const resuser = await res.json();
+
+       // only update the onboarded, name and email fields
+        const nraiser: Raiser = {
+            publickey: raiser?.publickey,
+            signature: raiser?.signature,
+            stacksaddress: raiser?.stacksaddress,
+            user: raiser?.user,
+            onboarded: resuser.user.onboarded,
+            name: resuser.user.name,
+            email: resuser.user.email,
+        }
+        console.log("NRAISER", nraiser)
+        setRaiser(nraiser);
+        localStorage.setItem("raiser", JSON.stringify(nraiser));
     }
 
     function connect() {

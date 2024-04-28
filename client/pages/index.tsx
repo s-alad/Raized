@@ -30,7 +30,10 @@ export default function Home() {
       }}
     >
       <main className={s.main}>
-          <ContractCallVote />
+        <h1 className={s.title}>
+          Raise the next big thing.
+        </h1>
+          {/* <ContractCallVote /> */}
       </main>
     </Connect>
   );

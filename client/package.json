@@ -9,14 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@stacks/connect": "^7.7.1",
     "@stacks/connect-react": "^22.4.2",
     "@stacks/transactions": "^6.13.1",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.51.3",
     "react-icons": "^5.1.0",
-    "sass": "^1.75.0"
+    "sass": "^1.75.0",
+    "zod": "^3.23.4"
   },
   "devDependencies": {
     "@types/node": "^20",

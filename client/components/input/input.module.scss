@@ -1,0 +1,29 @@
+.input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    label {
+        margin-bottom: 6px;
+        color: #000;
+        font-weight: bold;
+    }
+    input {
+        border: 2px solid #000;
+        border-radius: 10px;
+        height: 40px;
+        width: 100%;
+        background-color: transparent;
+        padding: 0 10px;
+        color: #000;
+
+        &::placeholder {
+            color: gray;
+        }
+    }
+    span {
+        margin-top: 4px;
+        font-size: small;
+        color: #000;
+        text-transform: lowercase;
+    }
+}
