@@ -3,10 +3,12 @@ import { FormEvent, useEffect, useState } from "react";
 import Gun from "gun";
 import s from "./dao.module.scss";
 import { useRouter } from "next/router";
+import { useAuth } from "@/authentication/authcontext";
 
 type Message = {
   text: string;
   id: string;
+  sender: string;
   createdAt?: number;
 };
 
@@ -17,6 +19,8 @@ export default function Projects() {
   const gun = Gun(['https://gun-manhattan.herokuapp.com/gun']);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
+  const { raiser } = useAuth();
+  const userId = raiser?.stacksaddress; // Replace with your actual user ID
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -46,10 +50,11 @@ export default function Projects() {
       const chatRef = gun.get(`chats/${projectuid}`);
       const newMessage = {
         text: message,
+        sender: userId,
         createdAt: Gun.state(),
       };
       chatRef.set(newMessage, (ack) => {
-          setMessage('');
+        setMessage('');
       });
     }
   };
@@ -64,7 +69,12 @@ export default function Projects() {
             <h1>Chat</h1>
             <div>
               {messages.map((m) => (
-                <div key={m.id}>{m.text}</div>
+                <div
+                  key={m.id}
+                  className={m.sender === userId ? s.userMessage : s.otherMessage}
+                >
+                  {m.text}
+                </div>
               ))}
             </div>
             <div className={s.input}>

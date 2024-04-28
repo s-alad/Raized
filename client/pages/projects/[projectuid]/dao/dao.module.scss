@@ -15,11 +15,19 @@
             background-color: rgb(241, 241, 241);
             width: 40vw;
             border-radius: 8px;
+            display: flex;
+            flex-direction: column;
 
             div{
-                background-color: red;
+                background-color: grey;
                 color: black;
-                height: 2vh;
+                height: 4vh;
+                width: 30%;
+                margin-left: 0.5vw;
+            }
+
+            .userMessage{
+                align-self: flex-end;
             }
         }
 
