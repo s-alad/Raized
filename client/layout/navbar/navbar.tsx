@@ -54,6 +54,7 @@ export default function Navbar() {
                         }}
                     >
                         <FaUser />
+                        {raiser?.stacksaddress}
                     </div>
                 }
             </span>
