@@ -8,6 +8,7 @@ router.get('/get-projects', projectcontroller.getprojects);
 router.get('/get-projects-by-search', projectcontroller.getprojectsbysearch);
 router.get('/get-project', projectcontroller.getproject);
 router.get('/get-featured-project', projectcontroller.getfeaturedproject);
+router.get('/get-stats', projectcontroller.getstats);
 
 router.post('/start-project', middleware, projectcontroller.startproject);
 router.get('/get-my-projects', middleware, projectcontroller.getmyprojects);

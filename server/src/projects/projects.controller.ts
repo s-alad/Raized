@@ -235,3 +235,11 @@ export const updateprojectfund = async (req: Request, res: Response) => {
         res.status(500).json({ error });
     }
 }
+
+export const getstats = async (req: Request, res: Response) => {
+    const projects = await mdb.db("crowd").collection('projects').find({ deployed: true }).toArray();
+    const users = await mdb.db("crowd").collection('users').find().toArray();
+    const amount = projects.reduce((acc, project) => acc + project.fundinggoal, 0);
+
+    res.status(200).json({ projects: projects.length, users: users.length, amount });
+}
