@@ -1,0 +1,33 @@
+.main{
+    height: 60vh;
+    width: 100vw;
+    display: flex;
+
+    .left{
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+
+        align-items: center;
+        justify-content: center;
+
+        div{
+            width: 80%;
+            display: flex;
+            align-items: first baseline;
+            flex-direction: column;
+
+            p{
+                align-self: center;
+            }
+        }
+    }
+
+    .right{
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}

@@ -3,9 +3,9 @@ import { useAuth } from "@/authentication/authcontext";
 import s from "./profile.module.scss";
 
 
-export default function Profile() {
+export default async function Profile() {
 
-    const {user, raiser, disconnect, connect} = useAuth()
+    const {user, raiser, disconnect} = useAuth()
 
     if (!user) {
         return (
@@ -22,6 +22,8 @@ export default function Profile() {
             {raiser?.email ? <p className={s.email}><i>{raiser?.email}</i></p> : ''}
             <p className={s.address}><i>{raiser?.stacksaddress}</i></p>
             <button onClick={disconnect}>Sign Out</button>
+
+            <button>Deploy</button>
         </main>
     )
 }   
