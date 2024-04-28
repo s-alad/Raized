@@ -5,7 +5,7 @@ import s from "./dao.module.scss";
 import { useRouter } from "next/router";
 export default function Projects() {
     const router = useRouter();
-    const {projectid} = router.query;
+    const {projectuid} = router.query;
     const [frozen, setFrozen] = useState(false);
 
 

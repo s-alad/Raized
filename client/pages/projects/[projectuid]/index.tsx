@@ -7,7 +7,7 @@ import { useAuth } from "@/authentication/authcontext";
 import { CVAR } from "@/utils/constant";
 export default function Projects() {
     const router = useRouter();
-    const {projectid} = router.query;
+    const {projectuid} = router.query;
 
     const {user, raiser} = useAuth();
 
@@ -15,7 +15,7 @@ export default function Projects() {
     
 
     async function getProject() {
-        const res = await fetch(`${CVAR}/projects/get-project?projectuid=${projectid}`, {
+        const res = await fetch(`${CVAR}/projects/get-project?projectuid=${projectuid}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -29,15 +29,15 @@ export default function Projects() {
     }
 
     useEffect(() => {
-        if (user && projectid) {
+        if (user && projectuid) {
             getProject();
         }
-    }, [user, projectid])
+    }, [user, projectuid])
 
 
     return (
         <main className={s.projectid}>
-            {projectid}
+            {projectuid}
 
         </main>
     )
