@@ -31,8 +31,6 @@ export const getmyprojects = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(500).json({ error });
     }
-    
-    
 }
 
 export const getproject = async (req: Request, res: Response) => {
@@ -62,8 +60,8 @@ export const startproject = async (req: Request, res: Response) => {
                 creator: publickey,
                 projectname,
                 projectuid,
-                created: new Date(),
-                
+                createdat: new Date(),
+                deployed: false,
             } 
         }, 
         { upsert: true,}

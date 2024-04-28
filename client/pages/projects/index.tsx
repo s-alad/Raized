@@ -4,17 +4,13 @@ import { useEffect, useState } from "react";
 import s from "./projects.module.scss";
 import { useAuth } from "@/authentication/authcontext";
 import { CVAR } from "@/utils/constant";
-
-interface SampleProject {
-    projectname: string;
-    projectuid: string;
-    creator: string;
-}
+import Project from "@/models/project";
+import { useRouter } from "next/router";
 
 export default function Projects() {
     const {user, raiser, disconnect, connect} = useAuth()
-
-    const [projects, setProjects] = useState<SampleProject[]>([]);
+    const router = useRouter();
+    const [projects, setProjects] = useState<Project[]>([]);
 
     async function getmyprojects() {
         const projectres = await fetch(`${CVAR}/projects/get-my-projects`, {
@@ -29,9 +25,9 @@ export default function Projects() {
         const projects = projectdata.projects;
 
         console.log(projects);
-        let nprojects: SampleProject[] = [];
+        let nprojects: Project[] = [];
         for (let project of projects) {
-            nprojects.push(project as SampleProject)
+            nprojects.push(project as Project)
             console.log(project);
         }
         setProjects(nprojects);
@@ -62,8 +58,22 @@ export default function Projects() {
                 projects.map((project, index) => {
                     return (
                         <div key={index} className={s.project}>
-                            <div className={s.projectname}>{project.projectname}</div>
-                            <div className={s.creator}>{project.creator}</div>
+                            <div className={s.left}>
+                                <img src={project.projectdisplayimage ?? "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"} alt="project" />
+                            </div>
+                            <div className={s.content}>
+                                <div className={s.projectname}>{project.projectname}</div>
+                                <div className={s.creator}>{project.creator}</div>
+                                <div className={s.description}>{project.projectdescription}</div>
+                                <div className={`${s.deployed} ${project.deployed ? s.live : s.draft}`}>{project.deployed ? "deployed" : "draft"}</div>
+                            </div>
+                            <div className={s.right}>
+                                <button className={s.edit}
+                                    onClick={() => {
+                                        router.push(`/projects/${project.projectuid}`)
+                                    }}
+                                >enter</button>
+                            </div>
                         </div>
                     )
                 })
