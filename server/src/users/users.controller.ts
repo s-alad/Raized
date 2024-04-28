@@ -29,17 +29,12 @@ export const adduserifnotexists = async (req: Request, res: Response) => {
     try {
 
         // publickey, signature is required
-        const { publickey, signature, stacksaddress } = req.body;
-        if (!publickey || !signature || !stacksaddress) {
+        const { publickey, stacksaddress } = req.body;
+        if (!publickey || !stacksaddress) {
             return res.status(400).json({ message: 'authentication failure' });
         }
 
-        // verify the message signature
-        const verified = verifyMessageSignatureRsv({ message, publicKey: publickey, signature });
-        if (!verified) {
-            return res.status(400).json({ message: 'signature is invalid' });
-        }
-        console.log(verified)
+        console.log(publickey, stacksaddress);
 
         // insert into the users collection with the key being the publickey
         const result = await mdb.db("crowd").collection('users').updateOne(
@@ -68,17 +63,10 @@ export const adduserifnotexists = async (req: Request, res: Response) => {
 export const onboarduser = async (req: Request, res: Response) => {
     try {
 
-        const { publickey, name, email, signature } = req.body;
-        if (!publickey || !signature) {
+        const { publickey, name, email } = req.body;
+        if (!publickey) {
             return res.status(400).json({ message: 'authentication failure' });
         }
-
-        // verify the message signature
-        const verified = verifyMessageSignatureRsv({ message, publicKey: publickey, signature });
-        if (!verified) {
-            return res.status(400).json({ message: 'signature is invalid' });
-        }
-        console.log(verified)
 
         const result = await mdb.db("crowd").collection('users').updateOne(
             { _id: publickey,}, 

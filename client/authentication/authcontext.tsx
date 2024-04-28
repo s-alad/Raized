@@ -48,6 +48,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     const [loading, setLoading] = useState<boolean>(true);
 
     async function askToRefresh() {
+        console.log("REFRESHING")
         const res = await fetch(`${CVAR}/users/get-user`, {
             method: "POST",
             headers: {
@@ -91,6 +92,9 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
                 const {pub, sig} = await provesign();
 
+                console.log("PUB", pub)
+                console.log("SIG", sig)
+
                 const res = await fetch(`${CVAR}/users/add-user-if-not-exists`, {
                     method: "POST",
                     headers: {
@@ -100,6 +104,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
                     },
                     body: JSON.stringify({
                         stacksaddress: mainnetstacks,
+                        publickey: pub,
                         message: "prove you own your wallet",
                     }),
                 })

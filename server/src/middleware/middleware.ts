@@ -9,7 +9,8 @@ export const middleware = (req: Request, res: Response, next: NextFunction) => {
     const signature = Array.isArray(req.headers['signature']) ? req.headers['signature'][0] : req.headers['signature'];
     
     console.log("MIDDLEWARE")
-    console.log(publickey, signature);
+    console.log("PUB", publickey)
+    console.log("SIG", signature)
 
     if (!publickey || !signature ) {
         console.log("MIDDLEWARE FAILED")
