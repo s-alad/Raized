@@ -11,14 +11,6 @@ path = 'contracts/Campaign.clar'
 clarity_version = 2
 epoch = 2.5
 
-
-[contracts.Wallet]
-path = 'contracts/Wallet.clar'
-clarity_version = 2
-epoch = 2.5
-[repl.analysis]
-passes = ['check_checker']
-
 [repl.analysis.check_checker]
 strict = false
 trusted_sender = false

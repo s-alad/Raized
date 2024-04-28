@@ -9,13 +9,14 @@
 (define-constant err-has-not-submitted-milestone u106)
 (define-constant err-not-owner u107)
 (define-constant err-already-voted u108)
+(define-constant err-contract-frozen u109)
 
 ;; global variables
 (define-data-var funding-goal uint u0)
 (define-data-var end-block uint u0)
 (define-data-var milestones uint u0)
 (define-map donator-tokens principal uint)
-(define-data-var donators (list 500 principal) (list tx-sender))
+(define-data-var num-donators uint u0)
 (define-data-var funded bool false)
 (define-data-var total-tokens uint u0)
 (define-data-var stats-per-token uint u0)
@@ -29,6 +30,7 @@
 (define-map vote-frozen principal bool)
 (define-data-var num-frozen-votes uint u0)
 (define-data-var frozen bool false)
+(define-map refunded principal bool)
 
 (define-data-var temp-tx-sender principal tx-sender)
 
@@ -66,19 +68,12 @@
 
 (define-public (donate (amount uint))
     (begin 
-        (try! (funding-ended))
-        (try! (check-end-deadline))
+        (try! (funding-ended))        (try! (check-end-deadline))
         (asserts! (> (stx-get-balance tx-sender) amount) (err err-not-enough-funds))
         (map-insert donator-tokens tx-sender amount)
-        (if (is-eq (len (var-get donators)) u0) 
-            (var-set donators (list tx-sender))
-            (var-set donators (default-to (var-get donators) (as-max-len? (concat (var-get donators) (list tx-sender)) u500)))
-        )
+        (var-set num-donators (+ u1 (var-get num-donators)))
         (var-set total-tokens (+ (var-get total-tokens) amount))
-        (if (> (var-get funding-goal) (stx-get-balance (as-contract tx-sender)))
-            (var-set funded true)
-            (var-set funded false)
-        )
+        (if (>= (var-get funding-goal) (stx-get-balance (as-contract tx-sender))) (var-set funded true) (var-set funded false))
         (stx-transfer? amount tx-sender (as-contract tx-sender))
     )
 )
@@ -86,7 +81,8 @@
 (define-public (claim-refund) 
     (begin
         (asserts! (< (var-get funding-goal) (stx-get-balance (as-contract tx-sender))) (err err-not-enough-funds))
-        (asserts! (is-eq (var-get frozen) true)  (err err-contract-funded)) 
+        (asserts! (is-eq (var-get frozen) true)  (err err-contract-frozen))
+        (asserts! (default-to true (map-get? refunded tx-sender)) (err err-already-claimed))
         (asserts! 
             (>= 
                 (stx-get-balance (as-contract tx-sender)) 
@@ -151,6 +147,102 @@
             (ok true)
         ) 
     ) 
+)
+
+;; Read Functions
+
+;; (define-data-var funding-goal uint u0)
+(define-read-only (read-funding-goal) 
+    (var-get funding-goal)
+)
+;; (define-data-var end-block uint u0)
+(define-read-only (read-end-block) 
+    (var-get end-block)
+)
+;; (define-data-var milestones uint u0)
+(define-read-only (read-milestones) 
+    (var-get milestones)
+)
+;; (define-map donator-tokens principal uint)
+(define-read-only (get-num-donator-tokens (address principal)) 
+    (default-to u0 (map-get? donator-tokens address))
+)
+;; (define-data-var num-donators uint u0)
+(define-read-only (read-num-donators)
+    (var-get num-donators)
+)
+
+;; (define-data-var funded bool false)
+(define-read-only (read-funded)
+    (var-get funded)
+)
+
+;; (define-data-var total-tokens uint u0)
+(define-read-only (read-total-tokens)
+    (var-get total-tokens)
+)
+
+;; (define-data-var stats-per-token uint u0)
+(define-read-only (read-stats-per-token)
+    (var-get stats-per-token)
+)
+
+;; (define-data-var claimed-first bool false)
+(define-read-only (read-claimed-first)
+    (var-get claimed-first)
+)
+
+;; (define-data-var owner principal tx-sender)
+(define-read-only (read-owner)
+    (var-get owner)
+)
+
+;; (define-map milestone-details uint {details: (string-ascii 50)})
+(define-read-only (get-milestone-details (milestone uint)) 
+    (map-get? milestone-details milestone)
+)
+
+;; (define-data-var current-milestone uint u1)
+(define-read-only (read-current-milestone)
+    (var-get current-milestone)
+)
+
+;; (define-map has-submitted-milestone uint bool)
+(define-read-only (has-milestone-been-submitted (milestone uint))
+    (default-to false (map-get? has-submitted-milestone milestone))
+)
+
+;; (define-map milestone-votes uint uint)
+(define-read-only (get-milestone-votes (milestone uint))
+    (default-to u0 (map-get? milestone-votes milestone))
+)
+
+;; (define-map has-voted-milestone { user:principal, milestone:uint} bool)
+(define-read-only (has-user-voted (user principal) (milestone uint))
+    (default-to false (map-get? has-voted-milestone {user: user, milestone: milestone}))
+)
+
+;; (define-map vote-frozen principal bool)
+(define-read-only (is-vote-frozen (address principal))
+    (default-to false (map-get? vote-frozen address))
+)
+
+;; (define-data-var num-frozen-votes uint u0)
+(define-read-only (read-num-frozen-votes)
+    (var-get num-frozen-votes))
+
+;; (define-data-var frozen bool false)
+(define-read-only (read-frozen)
+    (var-get frozen)
+)
+
+;; (define-map refunded principal bool)
+(define-read-only (has-been-refunded (address principal))
+    (default-to false (map-get? refunded address))
+)
+
+(define-read-only (get-balance)
+    (stx-get-balance (as-contract tx-sender))
 )
 
 
