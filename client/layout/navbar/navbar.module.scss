@@ -8,31 +8,35 @@
     align-items: center;
     padding: 30px 60px;
     background-color: p.$orange;
+    color: black;
 
     .rheo {
-        color: white;
+        color: inherit;
         font-size: 32px;
         font-family: Georgia, 'Times New Roman', Times, serif;
         width: 20%;
     }
 
     .search {
-        width: 30%;
+        width: 38%;
         /* padding: 8px; */
         background-color: transparent;
-        border: 2px solid white;
+        border: 2px solid black;
         border-radius: 6px;
         display: flex;
         .magnify {
             width: 34px;
             @include c.center();
-            color: white;
+            color: black;
         }
         input {
             padding: 8px;
             flex: 1;
             border: transparent;
             background-color: transparent;
+            &::placeholder {
+                color: rgba(0, 0, 0, 0.614);
+            }
         }
     }
 
@@ -45,18 +49,18 @@
         .cta {
             padding: 8px;
             border-radius: 4px;
-            border: 1px solid white;
+            border: 1px solid black;
             background-color: transparent;
-            color: white;
+            color: inherit;
             cursor: pointer;
         }
 
         .connect, .disconnect {
             padding: 8px;
             border-radius: 4px;
-            border: 1px solid white;
-            background-color: white;
-            color: black;
+            border: 1px solid black;
+            background-color: black;
+            color: white;
             cursor: pointer;
         }
 
@@ -65,8 +69,8 @@
             height: 32px;
             width: 32px;
             @include c.center();
-            color: white;
-            border: 2px solid white;
+            color: inherit;
+            border: 2px solid black;
             border-radius: 50%;
         }
     }

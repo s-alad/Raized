@@ -13,9 +13,7 @@ const port = process.env.PORT || 5000;
 const app: Express = express();
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
-
 app.use(cors());
-app.use(express.json());
 
 const mongourl = process.env.MDBURL || "";
 export const mdb = new MongoClient(mongourl, {
@@ -28,16 +26,16 @@ export const mdb = new MongoClient(mongourl, {
 mdb.connect().then(() => {
     console.log("[mongodb]: Connected to MongoDB");
 }).catch((err) => {
-    console.error("[mongodb]: Failed to connect to MongoDB");
-    console.error(err);
+    console.error("[mongodb]: Failed to connect to MongoDB", err);
 });
 
 app.get('/', (_: Request, res: Response) => {
     res.status(200).send("/");
 })
 
-app.use('/', mainrouter);
+app.use('/main', mainrouter);
 app.use('/users', usersrouter);
+app.use('/projects', mainrouter);
 
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);

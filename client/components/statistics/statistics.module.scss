@@ -1,0 +1,41 @@
+@use "../../styles/background.scss" as bg;
+@use "../../styles/common.scss" as c;
+@use "../../styles/palette.scss" as p;
+
+.statistics {
+    display: flex;
+    /* gap: 20px; */
+    border: 2px solid black;
+    border-radius: 4px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    .stat {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        padding: 18px;
+
+        &:first-child {
+            border-left: none;
+        }
+        &:last-child {
+            border-right: none;
+        }
+
+        .quantity {
+            font-size: 30px;
+            font-weight: bold;
+            color: p.$orange;
+        }
+        .label {
+            font-size: 18px;
+            color: black;
+        }
+    }
+}

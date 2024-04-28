@@ -1,0 +1,28 @@
+@use "../styles/background.scss" as bg;
+@use "../styles/common.scss" as c;
+@use "../styles/palette.scss" as p;
+
+
+.fullproject {
+    img {
+        border-left: 8px solid p.$orange;
+        width: 100%;
+    }
+    .name {
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+    .expiry {
+        font-size: 16px;
+        color: gray;
+    }
+    .progress {
+        font-size: 16px;
+        color: p.$orange;
+    }
+    .description {
+        margin-top: 10px;
+        font-size: 18px;
+    }
+}

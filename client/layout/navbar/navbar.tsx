@@ -24,7 +24,10 @@ export default function Navbar() {
             </div>
             <div className={s.search}>
                 <div className={s.magnify}><FaSearch /></div>
-                <input />
+                <input
+                    type="text"
+                    placeholder="Search for projects"
+                />
             </div>
             <span> 
                 <button className={s.cta}

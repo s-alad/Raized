@@ -1,5 +1,6 @@
 @use "../styles/background.scss" as bg;
 @use "../styles/common.scss" as c;
+@use "../styles/palette.scss" as p;
 
 .main {
     height: 100%;
@@ -9,6 +10,41 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 40px 200px;
+    font-family: "Nunito", sans-serif;
+    color: black;
+
+    .punchline {
+        font-size: 42px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .projects {
+        display: flex;
+        gap: 40px;
+        margin-top: 40px;
+        width: 100%;
+        .left, .right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .left {
+        }
+
+        // this is a grid which has two columns
+        .right {
+            .recommended {
+                gap: 20px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    }
+
 
     /* @include c.center(); */
 }
