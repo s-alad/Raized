@@ -26,7 +26,8 @@ export default function Projects() {
 
     const { user, raiser } = useAuth();
     const [project, setProject] = useState<Project>();
-
+    
+    let [loading, setLoading] = useState(true);
     let [amount, setAmount] = useState(0);
     let [funding, setFunding] = useState(false);
     async function fund() {
@@ -68,6 +69,8 @@ export default function Projects() {
     }
 
     async function getProject() {
+        setLoading(true);
+        console.log("getting project");
         const res = await fetch(`${CVAR}/projects/get-project?projectuid=${projectuid}`, {
             method: "GET",
             headers: {
@@ -81,19 +84,19 @@ export default function Projects() {
         console.log(data);
         const proj = data.project as Project;
         setProject(proj);
+        setLoading(false);
     }
 
     useEffect(() => {
-        if (user && projectuid) {
+        if (projectuid) {
             getProject();
         }
     }, [user, projectuid])
 
-    if (!user || !projectuid) { return <Loader /> }
-    if (!project) { return <Loader /> }
+    if (loading) { return <Loader /> }
 
-    if (!project.deployed) {
-        return (<main className={s.notdeployed}>project not deployed.</main>)
+    if ((project && !project.deployed) || !projectuid) {
+        return (<main className={s.notdeployed}>project issue.</main>)
     }
 
     return (
@@ -107,7 +110,8 @@ export default function Projects() {
                             <div className={s.punchline}>{project.projectpunchline}</div>
                             <div className={s.creator}>stx.{project.ownerstacksaddress}</div>
                         </div>
-                        <div className={s.right}>
+                        {
+                            user && <div className={s.right}>
                             {
                                 !funding ? <>
                                     <button className={s.dao} onClick={() => router.push(`/projects/${project.projectuid}/dao`)}>
@@ -126,6 +130,7 @@ export default function Projects() {
                                 </div>
                             }
                         </div>
+                        }
                     </div>
                     <div className={s.content}>
                         <img src={project.projectdisplayimage} alt={project.projectname} />

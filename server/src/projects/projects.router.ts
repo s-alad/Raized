@@ -11,7 +11,7 @@ router.get('/get-featured-project', projectcontroller.getfeaturedproject);
 
 router.post('/start-project', middleware, projectcontroller.startproject);
 router.get('/get-my-projects', middleware, projectcontroller.getmyprojects);
-router.post('/upload-project',middleware, projectcontroller.uploadproject);
+router.post('/upload-project', middleware, projectcontroller.uploadproject);
 router.post('/update-project-fund',middleware, projectcontroller.updateprojectfund);
 
 export default router;
