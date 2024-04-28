@@ -15,14 +15,40 @@ import Input from "@/components/input/input";
 import Button from "@/components/button/button";
 import ImageInput from "@/components/image/image";
 import { getDaysUntilExpiry } from "@/utils/conversion";
+import { openSTXTransfer } from '@stacks/connect';
+import { StacksMainnet, StacksTestnet } from '@stacks/network';
+import { AnchorMode, PostConditionMode } from '@stacks/transactions';
+
+
 export default function Projects() {
     const router = useRouter();
     const { projectuid } = router.query;
 
-    const {user, raiser} = useAuth();
+    const { user, raiser } = useAuth();
     const [project, setProject] = useState<Project>();
 
-    
+    async function fund() {
+
+        if (!project) { return; }
+
+        openSTXTransfer({
+            network: new StacksMainnet(), // which network to use; use `new StacksMainnet()` for mainnet
+            anchorMode: AnchorMode.Any, // which type of block the tx should be mined in
+
+            recipient: project.ownerstacksaddress, // which address we are sending to
+            amount: '1000', // amount to send in microstacks
+            memo: 'funding', // optional; a memo to help identify the tx
+
+            onFinish: response => {
+                // WHEN user confirms pop-up
+                console.log(response.txId); // the response includes the txid of the transaction
+            },
+            onCancel: () => {
+                // WHEN user cancels/closes pop-up
+                console.log('User canceled');
+            },
+        });
+    }
 
     async function getProject() {
         const res = await fetch(`${CVAR}/projects/get-project?projectuid=${projectuid}`, {
@@ -34,7 +60,7 @@ export default function Projects() {
             },
         });
 
-        const data = await res.json();  
+        const data = await res.json();
         console.log(data);
         const proj = data.project as Project;
         setProject(proj);
@@ -65,7 +91,9 @@ export default function Projects() {
                             <div className={s.creator}>stx.{project.ownerstacksaddress}</div>
                         </div>
                         <div className={s.right}>
-                            <button className={s.fund}>fund!</button>
+                            <button className={s.fund}
+                                onClick={fund}
+                            >fund!</button>
                         </div>
                     </div>
                     <div className={s.content}>
@@ -84,7 +112,7 @@ export default function Projects() {
                                 <label>raised:</label>
                                 <div className={s.raised}>
                                     <div className={s.bar}>
-                                        <div className={s.fill} style={{ 
+                                        <div className={s.fill} style={{
                                             width: project.amountraised === 0 ? "3%" : `${(project.amountraised / project.fundinggoal) * 100}%`
                                         }}>
                                         </div>

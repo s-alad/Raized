@@ -6,13 +6,16 @@ import { useAuth } from "@/authentication/authcontext";
 import { CVAR } from "@/utils/constant";
 import Project from "@/models/project";
 import { useRouter } from "next/router";
+import Loader from "@/components/loader/loader";
 
 export default function Projects() {
     const {user, raiser, disconnect, connect} = useAuth()
+    const [loading, setLoading] = useState(false)
     const router = useRouter();
     const [projects, setProjects] = useState<Project[]>([]);
 
     async function getmyprojects() {
+        setLoading(true);
         const projectres = await fetch(`${CVAR}/projects/get-my-projects`, {
             method: "GET",
             headers: {
@@ -31,6 +34,7 @@ export default function Projects() {
             console.log(project);
         }
         setProjects(nprojects);
+        setLoading(false);
     }
 
     // get my projects
@@ -52,6 +56,12 @@ export default function Projects() {
         )
     }
 
+    if (loading) {
+        return (
+            <Loader />
+        )
+    }
+    
     return (
         <main className={s.projects}>
             {

@@ -17,8 +17,8 @@ export const startProjectSchema: ZodType<StartProjectFormData> = z
 
 export const milestoneSchema: ZodType<Milestone> = z
     .object({
-        milestonename: z.string().min(1).max(50),
-        milestonedescription: z.string().min(1).max(50),
+        milestonename: z.string().min(1).max(100),
+        milestonedescription: z.string().min(1).max(1000),
         /* milestonenumber: z.number(), */
     })
 

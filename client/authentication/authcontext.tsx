@@ -6,7 +6,7 @@ import provesign from "@/utils/sign";
 import { CVAR } from "@/utils/constant";
 
 const appConfig = new AppConfig(["store_write", "publish_data"]);
-const userSession = new UserSession({ appConfig });
+const userSession = new UserSession({ appConfig, });
 
 interface Raiser {
     email?: string;
@@ -80,6 +80,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
     function connect() {
         showConnect({
+            
             appDetails: {
                 name: "Rheo",
                 icon: window.location.origin + "/logo512.png",
