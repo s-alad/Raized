@@ -55,17 +55,21 @@ export default function Projects() {
                 })
             })
 
+            console.log(uploadres);
+
             if (uploadres.ok) {
                 console.log("project uploaded successfully");
 
-                const campaignres = await fetch(`${CVAR}/contract`, {
+                /* const campaignres = await fetch(`${CVAR}/contract`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                });
+                }); */
+                const campaignres = await fetch('/Campaign.clar')
 
-                const campagin = await campaignres.text();
+                const campagin = await (await campaignres.text()).toString();
+                console.log(campagin);
 
                 const network = new StacksTestnet();
                 const txOptions = {
@@ -76,6 +80,7 @@ export default function Projects() {
                     anchorMode: AnchorMode.Any,
                 };
 
+                console.log(txOptions);
                 const transaction = await makeContractDeploy(txOptions);
 
                 const broadcastResponse = await broadcastTransaction(transaction, network);

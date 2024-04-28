@@ -93,7 +93,7 @@ export const uploadproject = async (req: Request, res: Response) => {
     
         const publickey = req.headers['publickey'] as string as any;
     
-        console.log(projectdisplayimage);
+        /* console.log(projectdisplayimage); */
     
         // update the project with the rest of the data
     
@@ -106,15 +106,15 @@ export const uploadproject = async (req: Request, res: Response) => {
                     expiry,
                     fundinggoal,
                     milestones,
-                    deployed: true,
+                    /* deployed: true, */
                 } 
             }
         );
 
         console.log(result);
-        if (result.modifiedCount === 0) {
+        /* if (result.modifiedCount === 0) {
             return res.status(400).json({ message: 'project not found' });
-        }
+        } */
     
         res.status(200).json({ message: 'deployed' });
     } catch (error) {
