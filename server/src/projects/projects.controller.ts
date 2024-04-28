@@ -27,6 +27,8 @@ export const getprojectsbysearch = async (req: Request, res: Response) => {
 
     const { search } = req.query as any;
 
+    console.log("searching for", search.toString());
+
     const collection = mdb.db("crowd").collection("projects");
     const q = search.toString();
 
