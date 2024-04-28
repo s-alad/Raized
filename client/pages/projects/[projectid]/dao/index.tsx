@@ -15,10 +15,24 @@ export default function Projects() {
             
             <div className={s.main}>
                 <div className={s.chat}>
+                    <h1>Chat</h1>
                     <div>Chat is this real?</div>
                     <input></input>
                     <button>↑</button>
                 </div>
+                <div className={s.milestones}>
+                    <h1>Milestone Submissions</h1>
+                    <ul>
+                        <li>1</li>
+                        <li>2</li>
+                    </ul>
+                </div>
+                <div className={s.voteFreeze}>
+                    <h1>Number of votes to freeze</h1>
+                    <p>5</p>
+                    <button>Freeze Project</button>
+                </div>
+
             </div>
             
             }
