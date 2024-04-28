@@ -18,6 +18,7 @@ import { base64ToBlob, blobToFile } from "@/utils/conversion";
 
 import { makeContractDeploy, broadcastTransaction, AnchorMode } from '@stacks/transactions';
 import { StacksTestnet, StacksMainnet } from '@stacks/network';
+/* import { readFileSync } from "fs"; */
 
 export default function Projects() {
     const router = useRouter();
@@ -33,10 +34,10 @@ export default function Projects() {
 
         // encode the image into base64
         const reader = new FileReader();
-        reader.onload = () => {
+        reader.onload = async () => {
             const base64 = reader.result?.toString();
             console.log(data);
-            const uploadres = fetch(`${CVAR}/projects/upload-project?projectuid=${projectuid}`, {
+            const uploadres = await fetch(`${CVAR}/projects/upload-project?projectuid=${projectuid}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -53,6 +54,33 @@ export default function Projects() {
                     milestones: data.milestones
                 })
             })
+
+            if (uploadres.ok) {
+                console.log("project uploaded successfully");
+
+                const campaignres = await fetch(`${CVAR}/contract`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                const campagin = await campaignres.text();
+
+                const network = new StacksTestnet();
+                const txOptions = {
+                    contractName: 'contract_name',
+                    codeBody: campagin,
+                    senderKey: 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01',
+                    network,
+                    anchorMode: AnchorMode.Any,
+                };
+
+                const transaction = await makeContractDeploy(txOptions);
+
+                const broadcastResponse = await broadcastTransaction(transaction, network);
+                const txId = broadcastResponse.txid;
+            }
         }
         reader.onerror = error => console.log(error);
         reader.readAsDataURL(data.projectdisplayimage);

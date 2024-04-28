@@ -6,6 +6,7 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 import mainrouter from './main/main.router';
 import usersrouter from './users/users.router';
 import projectsrouter from './projects/projects.router';
+import { readFileSync } from "fs";
 
 dotenv.config();
 
@@ -37,6 +38,12 @@ app.get('/', (_: Request, res: Response) => {
 app.use('/main', mainrouter);
 app.use('/users', usersrouter);
 app.use('/projects', projectsrouter);
+
+const read = readFileSync('./Campaign.clar').toString();
+console.log(read);
+app.get('/contract', (_: Request, res: Response) => {
+    res.status(200).send(read);
+})
 
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
