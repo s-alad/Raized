@@ -1,4 +1,12 @@
 @use "../../../styles/common.scss" as c;
+@use "../../../styles/palette.scss" as p;
+
+.notdeployed {
+    display: flex;
+    flex-direction: column;
+    padding: 40px 200px;
+    font-size: 32px;
+}
 
 .projectid {
     display: flex;
@@ -11,70 +19,127 @@
         display: flex;
         flex-direction: column;
         gap: 20px;
-        .projectname {
-            font-size: 42px;
-            font-weight: bold;
-        }
 
-        form {
+        .info {
+            display: flex;
+            align-items: center;
+            .left {
+                flex: 1;
+                .projectname {
+                    font-size: 48px;
+                    font-weight: bold;
+                }
+                .punchline {
+                    font-size: 32px;
+                }
+                .creator {
+                    margin-top: 2px;
+                    font-size: 16px;
+                    color: gray;
+                }
+            }
+            .right {
+                .fund {
+                    background-color: p.$orange;
+                    color: white;
+                    border: 1px solid p.$orange;
+                    padding: 16px 64px;
+                    font-size: 22px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+            }
+        }
+        .content {
+            display: flex;
+            img {
+                width: 400px;
+                height: 300px;
+                object-fit: cover;
+                border-radius: 4px;
+            }
+            .details {
+                flex: 1;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                .detail {
+                    label {
+                        font-size: 16px;
+                        color: gray;
+                    }
+                    p {
+                        font-size: 18px;
+                    }
+                
+                    .raised {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        .bar {
+                            width: 340px;
+                            height: 30px;
+                            border: 2px solid p.$orange;
+                            border-radius: 4px;
+                            padding: 8px;
+                        }
+                        .fill {
+                            background-color: p.$orange;
+                            height: 100%;
+                            border-radius: 1px;
+                        }
+                        p {
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+        }
+        .milestones {
             display: flex;
             flex-direction: column;
             gap: 20px;
 
-            label {
-                color: #000;
-                font-weight: bold;
-            }
-
-            .milestones {
+            .milestone {
+                padding-left: 20px;
                 display: flex;
-                flex-direction: column;
-                gap: 20px;
-                .milestone {
-                    padding-left: 20px;
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    gap: 10px;
-                    height: min-content;
+                flex-direction: row;
+                align-items: center;
+                gap: 14px;
+                height: min-content;
 
-                    .mile {
-                        height: 90px;
-                        padding: 4px;
-                        @include c.center();
-                        background-color: orange;
-                        border-radius: 2px;
-                    }
-
-                    .stone {
-                        flex: 1;
-                        display: flex;
-                        flex-direction: column;
-                        gap: 10px;
+                .mile {
+                    padding: 8px;
+                    @include c.center();
+                    flex-direction: column;
+                    background-color: black;
+                    border-radius: 2px;
+                    color: white;
+                    label {
+                        font-size: 20px;
+                        color: white;
                     }
                 }
 
-                .functionality {
+                .stone {
+                    flex: 1;
                     display: flex;
-                    gap: 10px;
-                    .add, .remove {
-                        margin-top: 10px;
-                        padding: 1px 18px;
-                        white-space: nowrap;
-                        font-size: 12px;
-                        width: min-content;
-                        border: 2px solid #000;
-                        border-radius: 6px;
-                        cursor: pointer;
+                    flex-direction: column;
+                    gap: 4px;
+
+                    .name {
+                        font-size: 24px;
+                        font-weight: bold;
+                    
                     }
                 }
             }
-
-            .goal {
-                width: 20%;
-            }
-
-            
         }
+
+        .goal {
+            width: 20%;
+        }
+
     }
 }

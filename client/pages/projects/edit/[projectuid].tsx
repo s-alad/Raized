@@ -23,6 +23,7 @@ import { StacksTestnet, StacksMainnet } from '@stacks/network';
 export default function Projects() {
     const router = useRouter();
     const { projectuid } = router.query;
+    const [loading, setLoading] = useState<boolean>(false);
 
     const { user, raiser } = useAuth();
     const [project, setProject] = useState<Project>();
@@ -30,6 +31,7 @@ export default function Projects() {
     const [previewImage, setPreviewImage] = useState<string>("");
 
     async function onSubmit(data: CreateProjectFormData) {
+        setLoading(true);
         console.log(data);
 
         // encode the image into base64
@@ -59,29 +61,17 @@ export default function Projects() {
 
             if (uploadres.ok) {
                 console.log("project uploaded successfully");
-
-                /*
-                const campaignres = await fetch('/Campaign.clar')
-                const campagin = await (await campaignres.text()).toString();
-                console.log(campagin);
-
-                const network = new StacksTestnet();
-                const txOptions = {
-                    contractName: 'contract_name',
-                    codeBody: campagin,
-                    senderKey: 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01',
-                    network,
-                    anchorMode: AnchorMode.Any,
-                };
-
-                console.log(txOptions);
-                const transaction = await makeContractDeploy(txOptions);
-
-                const broadcastResponse = await broadcastTransaction(transaction, network);
-                const txId = broadcastResponse.txid; */
+                setLoading(false);
+                router.push(`/projects`);
+            } else {
+                console.log("project upload failed");
+                setLoading(false);
             }
         }
-        reader.onerror = error => console.log(error);
+        reader.onerror = error => {
+            console.log(error);
+            setLoading(false);
+        }
         reader.readAsDataURL(data.projectdisplayimage);
     }
 
@@ -245,6 +235,7 @@ export default function Projects() {
                                 console.log("deploying project")
                                 console.log(errors.expiry)
                             }}
+                            loading={loading}
                         />
                     </form>
                 </div>

@@ -46,6 +46,7 @@ export default function Raise() {
             },
             body: JSON.stringify({
                 projectname: data.projectname,
+                ownerstacksaddress: raiser?.stacksaddress
             }),
         });
         if (res.status !== 200) {
@@ -59,7 +60,7 @@ export default function Raise() {
         setLoading(false);
 
         // redirect to the project page
-        router.push(`/projects/${projectuid}`)
+        router.push(`/projects/edit/${projectuid}`)
     }
 
     const { register, handleSubmit, control, formState: { errors } } =

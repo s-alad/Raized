@@ -13,6 +13,7 @@ export default interface CreateProject {
 
 export default interface Project {
     // created on start
+    ownerstacksaddress: string;
     projectname: string;
     projectuid: string;
     creator: string; // public key
@@ -34,4 +35,5 @@ export default interface Project {
 
     // read
     backers: string[]; // public keys
+    amountraised: number;
 }

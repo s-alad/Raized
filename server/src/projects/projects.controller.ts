@@ -58,12 +58,11 @@ export const getproject = async (req: Request, res: Response) => {
 
 export const startproject = async (req: Request, res: Response) => {
     console.log("!---------------------")
-    const { projectname } = req.body;
+    const { projectname, ownerstacksaddress } = req.body;
     const publickey = req.headers['publickey'] as string as any;
     console.log(projectname, publickey);
 
     const projectuid = uuidv4().replace(/-/g, '');
-
 
     const result = await mdb.db("crowd").collection('projects').updateOne(
         { _id: projectuid as any,}, 
@@ -73,6 +72,7 @@ export const startproject = async (req: Request, res: Response) => {
                 projectuid,
                 createdat: new Date(),
                 deployed: false,
+                ownerstacksaddress
             } 
         }, 
         { upsert: true,}
@@ -100,7 +100,7 @@ export const uploadproject = async (req: Request, res: Response) => {
 
         // deploy contract
 
-        const txOptions = {
+        /* const txOptions = {
             contractName: projectuid,
             codeBody: readFileSync('./Campaign.clar').toString(),
             senderKey: 'be33449aaa5b1028e8a42e78be6bdbb9822fb4cfba6b68fbcde9931a112b0e4f',
@@ -114,7 +114,7 @@ export const uploadproject = async (req: Request, res: Response) => {
         console.log(broadcastResponse);
 
         const txId = broadcastResponse.txid;
-        console.log(txId);
+        console.log(txId); */
     
         // update the project with the rest of the data
     
@@ -127,7 +127,9 @@ export const uploadproject = async (req: Request, res: Response) => {
                     expiry,
                     fundinggoal,
                     milestones,
+                    amountraised: 0,
                     deployed: true,
+                    backers: [],
                     deployedcontract: `ST3Q0RC31AXX3DYX708QKVNBWT9KTSKWYKDB7PN2J.${projectuid}`,
                 } 
             }
