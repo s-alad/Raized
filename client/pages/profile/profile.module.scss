@@ -7,7 +7,23 @@
     flex-direction: column;
 
     h1{
+        margin-top: 5vh;
+        font-size: 7rem;
+    }
 
+    .name{
+        margin: 2vh 0;
+        font-size: 3rem;
+    }
+
+    .email{
+        font-size: 1rem;
+        margin: 2vh 0;
+    }
+
+    .address{
+        font-size: 1rem;
+        margin: 2vh 0;
     }
 
     button{
@@ -17,5 +33,6 @@
         color: white;
         height: 5vh;
         border-radius: 4px;
+        margin-top: 4vh;
     }
 }
