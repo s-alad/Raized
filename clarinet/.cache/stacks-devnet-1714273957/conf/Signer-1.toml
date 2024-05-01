@@ -1,8 +1,0 @@
-
-stacks_private_key = "7287ba251d44a4d3fd9276c88ce34c5c52a038955511cccaf77e61068649c17801"
-node_host = "stacks-node.CrowdFund.devnet:20443" # eg "127.0.0.1:20443"
-# must be added as event_observer in node config:
-endpoint = "0.0.0.0:30001"
-network = "testnet"
-auth_password = "12345"
-db_path = "stacks-signer-1.sqlite"
