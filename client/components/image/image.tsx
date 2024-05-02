@@ -23,7 +23,9 @@ export default function ImageInput({ label, name, control, error, previewimg, ca
             control={control}
             render={({ field: { ref, name, onBlur, onChange } }) => (
                 <div className={s.photo}>
-                    <label htmlFor={name} className={s.upload}>
+                    <label htmlFor={name} className={s.upload}
+                            onClick={()=>console.log("CIKC")}
+                    >
                         +
                     </label>
                     <input
