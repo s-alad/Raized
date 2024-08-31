@@ -1,12 +1,12 @@
 [project]
-name = 'Campaign'
+name = 'CrowdscourceDAO'
 description = ''
 authors = []
 telemetry = true
 cache_dir = './.cache'
 requirements = []
-[contracts.Campaign]
-path = 'contracts/Campaign.clar'
+[contracts.CrowdscourceDAO]
+path = 'contracts/CrowdscourceDAO.clar'
 clarity_version = 2
 epoch = 2.5
 [repl.analysis]
