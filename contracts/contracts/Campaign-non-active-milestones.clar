@@ -10,19 +10,19 @@
 ;; global variables
 (define-data-var funding-goal uint u0)
 (define-data-var end-block uint u0)
-(define-data-var num-milestones uint u0)
+(define-map milestones uint {
+    milestoneDescription:string-ascii 100, 
+    votes:uint, approved:bool, 
+    claimed:bool, 
+    finishedMilestone: string-ascii 100
+})
 (define-map donator-stx-tokens principal uint)
-(define-map map-name principal uint)
 (define-data-var num-donators uint u0)
 (define-data-var funded bool false)
 (define-data-var total-tokens uint u0)
 (define-data-var stats-per-token uint u0)
 (define-data-var claimed-first bool false)
 (define-data-var owner principal tx-sender)
-(define-map milestone-details uint {details: (string-ascii 100)})
-(define-data-var current-milestone uint u1)
-(define-map has-submitted-milestone uint bool)
-(define-map milestone-votes uint uint)
 (define-map has-voted-milestone { user:principal, milestone:uint} bool)
 (define-map vote-frozen principal bool)
 (define-data-var num-frozen-votes uint u0)
@@ -62,7 +62,7 @@
         (asserts! (is-eq (var-get owner) tx-sender) (err ERR-ONLY-OWNER))
         (var-set funding-goal funding-goal_)
         (var-set end-block (+ block-height block-duration_))
-        (var-set num-milestones num-milestones_)
+        ()
         (ok true)
     )
 )
@@ -111,14 +111,16 @@
 
 ;; @dev This function can only be run by the project creator to claim their first milestone after
 ;;      project is initially funded
-(define-public (claim-first-milestone) 
+
+;; change to claim-milestone and input an index
+(define-public (claim-milestone (uint index)) 
     (begin 
         (asserts! (is-eq tx-sender (var-get owner))  ERR-ONLY-OWNER)
         (asserts! (is-eq (var-get funded) true) ERR-NOT-ENOUGH-FUNDS)
-        (asserts! (is-eq (var-get claimed-first) false) ERR-ALREADY-CLAIMED)
-        (var-set current-milestone (+ u1 (var-get current-milestone)))
-        (var-set claimed-first true)
-        (as-contract (stx-transfer? (/ (stx-get-balance tx-sender) (var-get num-milestones)) tx-sender (var-get owner)))
+        ;; (asserts! (is-eq (var-get claimed-first) false) ERR-ALREADY-CLAIMED)
+        ;; (var-set current-milestone (+ u1 (var-get current-milestone)))
+        ;; (var-set claimed-first true)
+        ;; (as-contract (stx-transfer? (/ (stx-get-balance tx-sender) (var-get num-milestones)) tx-sender (var-get owner)))
     )
 )
 

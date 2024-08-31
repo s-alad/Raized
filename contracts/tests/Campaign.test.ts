@@ -1,5 +1,6 @@
-
+import { Cl } from '@stacks/transactions';
 import { describe, expect, it } from "vitest";
+
 
 const accounts = simnet.getAccounts();
 const address1 = accounts.get("wallet_1")!;
@@ -9,13 +10,9 @@ const address1 = accounts.get("wallet_1")!;
   https://docs.hiro.so/clarinet/feature-guides/test-contract-with-clarinet-sdk
 */
 
-describe("example tests", () => {
-  it("ensures simnet is well initalised", () => {
-    expect(simnet.blockHeight).toBeDefined();
+describe("donate function tests", () => {
+  it('donates 10', () => {
+    const startResponse = simnet.callPublicFn('Campaign', 'start', [Cl.uint(100), Cl.uint(10), Cl.uint(3)], address1);
+    expect(startResponse.result).toBeOk(Cl.bool(true));
   });
-
-  // it("shows an example", () => {
-  //   const { result } = simnet.callReadOnlyFn("counter", "get-counter", [], address1);
-  //   expect(result).toBeUint(0);
-  // });
 });
